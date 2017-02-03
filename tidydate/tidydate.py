@@ -11,21 +11,21 @@ class TidyDate(object):
 
     def __init__(self, file_path, col_name):
 
-        self.df = self.file_type(file_path)
+        self.file_name, self.df = self.to_df(file_path)
         self.col_name = col_name
         self.date_col = self.grab_date_col()
         self.clean_col = []
 
     @staticmethod
-    def file_type(file_path):
+    def to_df(file_path):
 
-        ext = file_path.split('.')[-1]
+        file_name, ext = file_path.split('.')
 
         if ext == "csv":
-            return read_csv(file_path, index=False)
+            return file_name, read_csv(file_path, index=False)
 
         elif ext == "xlsx":
-            return read_excel(file_path, index=False)
+            return file_name, read_excel(file_path, index=False)
 
     def grab_date_col(self):
 
@@ -60,10 +60,60 @@ class TidyDate(object):
                 lambda x: x.date() if notnull(x) else x
             )
 
-            return self.df
+    def split_date(self):
+
+        # tidy_dates = list(self.df["tidy_date"])
+
+        # tidy_year = []
+        # tidy_month = []
+        # tidy_day = []
+
+        # for date in tidy_dates:
+        #     try:
+        #         year, month, day = date.split('-')
+        #         tidy_year.append(year)
+        #         tidy_month.append(month)
+        #         tidy_day.append(day)
+
+        #     except AttributeError:
+        #         tidy_year.append("")
+        #         tidy_month.append("")
+        #         tidy_day.append("")
+        #         continue
+
+        # self.df["tidy_year"], self.df["tidy_month"], self.df["tidy_day"] = \
+        #     tidy_year, tidy_month, tidy_day
+
+        self.df["tidy_year"] = self.df["tidy_date"].apply(
+            lambda x: str(x).split("-")[0] if notnull(x) else x
+        )
+
+        self.df["tidy_month"] = self.df["tidy_date"].apply(
+            lambda x: str(x).split("-")[1] if notnull(x) else x
+        )
+
+        self.df["tidy_day"] = self.df["tidy_date"].apply(
+            lambda x: str(x).split("-")[2] if notnull(x) else x
+        )
+
+    def fill_na(self):
+
+        self.df["tidy_date"].fillna(self.df[self.col_name], inplace=True)
+        self.df["tidy_year"].fillna(self.df[self.col_name], inplace=True)
+        self.df["tidy_month"].fillna(self.df[self.col_name], inplace=True)
+        self.df["tidy_day"].fillna(self.df[self.col_name], inplace=True)
+
+        print(self.df)
+
+    def download(self):
+
+        self.clean_date_col()
+        self.split_date()
+        self.fill_na()
+        self.df.to_csv(self.file_name + "_tidydate.csv", index=False)
 
 
 if __name__ == '__main__':
 
     obj = TidyDate("nsnextract.xlsx", "Messy Date")
-    obj.clean_date_col()
+    obj.download()
