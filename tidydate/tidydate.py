@@ -15,6 +15,11 @@ class TidyDate(object):
         self.col_name = col_name
         self.date_col = self.grab_date_col()
         self.clean_col = []
+        self.tidy_date_split = [
+            "tidy_year",
+            "tidy_month",
+            "tidy_day"
+        ]
 
     @staticmethod
     def to_df(file_path):
@@ -62,48 +67,18 @@ class TidyDate(object):
 
     def split_date(self):
 
-        # tidy_dates = list(self.df["tidy_date"])
+        for index, col in enumerate(self.tidy_date_split):
 
-        # tidy_year = []
-        # tidy_month = []
-        # tidy_day = []
-
-        # for date in tidy_dates:
-        #     try:
-        #         year, month, day = date.split('-')
-        #         tidy_year.append(year)
-        #         tidy_month.append(month)
-        #         tidy_day.append(day)
-
-        #     except AttributeError:
-        #         tidy_year.append("")
-        #         tidy_month.append("")
-        #         tidy_day.append("")
-        #         continue
-
-        # self.df["tidy_year"], self.df["tidy_month"], self.df["tidy_day"] = \
-        #     tidy_year, tidy_month, tidy_day
-
-        self.df["tidy_year"] = self.df["tidy_date"].apply(
-            lambda x: str(x).split("-")[0] if notnull(x) else x
-        )
-
-        self.df["tidy_month"] = self.df["tidy_date"].apply(
-            lambda x: str(x).split("-")[1] if notnull(x) else x
-        )
-
-        self.df["tidy_day"] = self.df["tidy_date"].apply(
-            lambda x: str(x).split("-")[2] if notnull(x) else x
-        )
+            self.df[col] = self.df["tidy_date"].apply(
+                lambda x: int(str(x).split("-")[index]) if notnull(x) else x
+            )
 
     def fill_na(self):
 
-        self.df["tidy_date"].fillna(self.df[self.col_name], inplace=True)
-        self.df["tidy_year"].fillna(self.df[self.col_name], inplace=True)
-        self.df["tidy_month"].fillna(self.df[self.col_name], inplace=True)
-        self.df["tidy_day"].fillna(self.df[self.col_name], inplace=True)
+        self.tidy_date_split.append("tidy_date")
 
-        print(self.df)
+        for col in self.tidy_date_split:
+            self.df[col].fillna(self.df[self.col_name], inplace=True)
 
     def download(self):
 
@@ -111,9 +86,3 @@ class TidyDate(object):
         self.split_date()
         self.fill_na()
         self.df.to_csv(self.file_name + "_tidydate.csv", index=False)
-
-
-if __name__ == '__main__':
-
-    obj = TidyDate("nsnextract.xlsx", "Messy Date")
-    obj.download()
