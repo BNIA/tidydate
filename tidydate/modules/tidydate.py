@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from __future__ import absolute_import, print_function, unicode_literals
 
 import sys
@@ -31,6 +34,10 @@ class TidyDate(object):
 
         elif ext == "xlsx":
             return file_name, read_excel(file_path, index=False)
+
+    def get_cols(self):
+
+        return list(self.df)
 
     def grab_date_col(self):
 
