@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# pylint: disable=unused-import
+
+"""config
+
+This file instantiates the Flask app and other configurations
+"""
 
 from __future__ import absolute_import, print_function, unicode_literals
 import string
