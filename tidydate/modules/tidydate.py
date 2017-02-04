@@ -3,7 +3,6 @@
 
 from __future__ import absolute_import, print_function, unicode_literals
 
-import sys
 from textwrap import dedent
 
 import dateparser
@@ -12,11 +11,10 @@ from pandas import notnull, read_csv, read_excel
 
 class TidyDate(object):
 
-    def __init__(self, file_path, col_name):
+    def __init__(self, file_path):
 
         self.file_name, self.df = self.to_df(file_path)
-        self.col_name = col_name
-        self.date_col = self.grab_date_col()
+        self.column = ""
         self.clean_col = []
         self.tidy_date_split = [
             "tidy_year",
@@ -39,32 +37,38 @@ class TidyDate(object):
 
         return list(self.df)
 
-    def grab_date_col(self):
+    def set_col(self, column):
 
-        if self.col_name in list(self.df):
-            return list(self.df[self.col_name])
+        #     self.column = column
 
-        possible_cols = ", ".join(
-            [col for col in list(self.df) if "date" in col.lower()]
-        )
+        # def grab_date_col(self):
 
-        sys.exit(
-            dedent(
-                ("Inputted column ({wrong_col}) does not exist.\n"
-                 "Possible date columns are:\n"
-                 "{cols}".format(
-                     wrong_col=self.col_name,
-                     cols=possible_cols
-                 )
-                 )
+        if column in self.get_cols():
+            self.column = column
+            # return list(self.df[self.column])
+
+        else:
+            possible_cols = ", ".join(
+                [col for col in list(self.df) if "date" in col.lower()]
             )
-        )
+
+            print(
+                dedent(
+                    ("Inputted column ({wrong_col}) does not exist.\n"
+                     "Possible date columns are:\n"
+                     "{cols}".format(
+                         wrong_col=self.column,
+                         cols=possible_cols
+                     )
+                     )
+                )
+            )
 
     def clean_date_col(self):
 
-        if self.date_col:
+        if self.column:
 
-            self.df["tidy_date"] = self.df[self.col_name].apply(
+            self.df["tidy_date"] = self.df[self.column].apply(
                 lambda x: dateparser.parse(x)
             )
 
@@ -85,7 +89,7 @@ class TidyDate(object):
         self.tidy_date_split.append("tidy_date")
 
         for col in self.tidy_date_split:
-            self.df[col].fillna(self.df[self.col_name], inplace=True)
+            self.df[col].fillna(self.df[self.column], inplace=True)
 
     def download(self):
 
