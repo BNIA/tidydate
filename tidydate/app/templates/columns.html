@@ -1,11 +1,21 @@
+{% extends "components/base.html" %}
+
+{% block content %}
+
 <form method="POST" class="form-horizontal form-label-left">
 
-    <div class="col-md-2 col-sm-2 col-xs-12">
-        <select id="column" name="column" class="form-control">
+    <div>
+        <select data-placeholder="Select the date column" id="column" name="column" class="chosen">
             {% for column in columns %}
-            <option>{{ column }}</option>
+            <option value="{{ column }}">{{ column }}</option>
             {% endfor %}
         </select>
         <input type="submit" value="Upload">
     </div>
 </form>
+
+<script type="text/javascript">
+    jQuery(".chosen").chosen();
+</script>
+
+{% endblock %}
