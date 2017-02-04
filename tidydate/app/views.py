@@ -29,7 +29,6 @@ def upload():
 
             app.file_name = secure_filename(file.filename)
             file_path = path.join(app.config['UPLOAD_FOLDER'], app.file_name)
-            print(file_path)
             file.save(file_path)
             return redirect(url_for("upload"))
 
@@ -49,7 +48,7 @@ def uploaded_file(file_name):
 
         column = request.form.to_dict()["column"]
         new_df.set_col(column)
-        new_df.download()
-        return "DONE"
+
+        return "DONE" if new_df.download() else "FAILED"
 
     return render_template("columns.html", columns=new_df.get_cols())

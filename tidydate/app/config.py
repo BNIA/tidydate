@@ -9,7 +9,7 @@ from random import SystemRandom, uniform
 from flask import Flask
 
 UPLOAD_FOLDER = "uploads"
-ALLOWED_EXTENSIONS = set(["csv", "xlsx"])
+ALLOWED_EXTENSIONS = {"csv", "xlsx"}
 
 app = Flask(__name__)
 

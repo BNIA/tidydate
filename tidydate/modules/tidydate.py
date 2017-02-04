@@ -3,6 +3,8 @@
 
 from __future__ import absolute_import, print_function, unicode_literals
 
+from os import path
+import sys
 from textwrap import dedent
 
 import dateparser
@@ -28,10 +30,10 @@ class TidyDate(object):
         file_name, ext = file_path.split('.')
 
         if ext == "csv":
-            return file_name, read_csv(file_path, index=False)
+            return file_name, read_csv(file_path)
 
         elif ext == "xlsx":
-            return file_name, read_excel(file_path, index=False)
+            return file_name, read_excel(file_path)
 
     def get_cols(self):
 
@@ -39,20 +41,15 @@ class TidyDate(object):
 
     def set_col(self, column):
 
-        #     self.column = column
-
-        # def grab_date_col(self):
-
         if column in self.get_cols():
             self.column = column
-            # return list(self.df[self.column])
 
         else:
             possible_cols = ", ".join(
                 [col for col in list(self.df) if "date" in col.lower()]
             )
 
-            print(
+            sys.exit(
                 dedent(
                     ("Inputted column ({wrong_col}) does not exist.\n"
                      "Possible date columns are:\n"
@@ -96,4 +93,9 @@ class TidyDate(object):
         self.clean_date_col()
         self.split_date()
         self.fill_na()
-        self.df.to_csv(self.file_name + "_tidydate.csv", index=False)
+
+        new_file = self.file_name + "_tidydate.csv"
+
+        self.df.to_csv(new_file, index=False)
+
+        return path.isfile(new_file)
