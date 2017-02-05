@@ -24,6 +24,7 @@ app.secret_key = ''.join(
     ) for _ in range(int(uniform(10, 20)))
 )
 app.file_name = ""
+app.df = None
 
 
 def allowed_file(file_name):

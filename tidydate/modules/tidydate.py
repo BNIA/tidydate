@@ -9,7 +9,7 @@ ISO 8601 formatted dates (YYYY-MM-DD).
 """
 
 from __future__ import absolute_import, print_function, unicode_literals
-from os import path
+from os import path, remove
 import sys
 from textwrap import dedent
 
@@ -20,8 +20,8 @@ from pandas import notnull, read_csv, read_excel
 class TidyDate(object):
 
     def __init__(self, file_path):
-        """Constructs a TidyDate object by creating a dataframe from the
-        inputted file
+        """Constructs a TidyDate object by creating a dataframe from the input
+        file
 
         Args:
             file_path (`str`): path of the uploaded dataset
@@ -30,7 +30,9 @@ class TidyDate(object):
             None
         """
 
-        self.file_name, self.df = self.to_df(file_path)
+        self.file_path = file_path
+        self.file_name = ""
+        self.df = self.to_df()
         self.column = ""
         self.tidy_date_split = [
             "tidy_year",
@@ -38,8 +40,18 @@ class TidyDate(object):
             "tidy_day"
         ]
 
-    @staticmethod
-    def to_df(file_path):
+    def __del__(self):
+        """Destructor to remove the uploaded file after conversion
+
+        Args:
+            None
+
+        Returns:
+            None
+        """
+        remove(self.file_path)
+
+    def to_df(self):
         """Converts the input file into a Pandas Dataframe
 
         Args:
@@ -50,13 +62,13 @@ class TidyDate(object):
             (`obj: pandas.Dataframe`): dataframe of the file
         """
 
-        file_name, ext = file_path.split('.')
+        self.file_name, ext = self.file_path.split('.')
 
         if ext == "csv":
-            return file_name, read_csv(file_path)
+            return read_csv(self.file_path)
 
         elif ext == "xlsx":
-            return file_name, read_excel(file_path)
+            return read_excel(self.file_path)
 
     def get_cols(self):
         """Returns the columns found in the input file

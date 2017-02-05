@@ -5,7 +5,7 @@
 """views
 
 This file contains the endpoints for rendering the interface and implementing
-the backend modules.
+the backend modules
 """
 
 from __future__ import absolute_import, print_function, unicode_literals
@@ -55,6 +55,10 @@ def upload():
 
             return redirect(url_for("upload"))
 
+    app.df = tidydate.TidyDate(
+        path.join(app.config['UPLOAD_FOLDER'], app.file_name)
+    )
+
     return redirect(
         url_for("parse_date", file_name=app.file_name)
     )
@@ -72,15 +76,11 @@ def parse_date(file_name):
         if GET: (`list` of `str`): list of column names in file
     """
 
-    new_df = tidydate.TidyDate(
-        path.join(app.config['UPLOAD_FOLDER'], file_name)
-    )
-
     if request.method == "POST":
 
         column = request.form.to_dict()["column"]
-        new_df.set_col(column)
+        app.df.set_col(column)
 
-        return "DONE" if new_df.download() else "FAILED"
+        return "DONE" if app.df.download() else "FAILED"
 
-    return render_template("columns.html", columns=new_df.get_cols())
+    return render_template("columns.html", columns=app.df.get_cols())
