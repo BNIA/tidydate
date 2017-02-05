@@ -2,6 +2,12 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=unused-import
 
+"""views
+
+This file contains the endpoints for rendering the interface and implementing
+the backend modules
+"""
+
 from __future__ import absolute_import, print_function, unicode_literals
 from os import path
 
@@ -13,13 +19,30 @@ from .context import modules
 from modules import tidydate
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/')
 def index():
+    """Renders the index page
+
+    Args:
+        None
+
+    Returns:
+        (`obj`): rendered template
+    """
     return render_template('index.html')
 
 
 @app.route('/upload', methods=["GET", "POST"])
 def upload():
+    """Handles the uploaded file
+
+    Args:
+        None
+
+    Returns:
+        if POST: redirect here
+        if GET: pass path of downloaded file on to be parsed
+    """
 
     if request.method == 'POST':
 
@@ -28,27 +51,36 @@ def upload():
         if file and allowed_file(file.filename):
 
             app.file_name = secure_filename(file.filename)
-            file_path = path.join(app.config['UPLOAD_FOLDER'], app.file_name)
-            file.save(file_path)
+            file.save(path.join(app.config['UPLOAD_FOLDER'], app.file_name))
+
             return redirect(url_for("upload"))
 
+    app.df = tidydate.TidyDate(
+        path.join(app.config['UPLOAD_FOLDER'], app.file_name)
+    )
+
     return redirect(
-        url_for("uploaded_file", file_name=app.file_name)
+        url_for("parse_date", file_name=app.file_name)
     )
 
 
 @app.route('/upload/<file_name>', methods=["GET", "POST"])
-def uploaded_file(file_name):
+def parse_date(file_name):
+    """Parses the uploaded file
 
-    new_df = tidydate.TidyDate(
-        path.join(app.config['UPLOAD_FOLDER'], file_name)
-    )
+    Args:
+        file_name (`str`): path of the uploaded file
+
+    Returns:
+        if POST: (`str`): status of parsing file
+        if GET: (`list` of `str`): list of column names in file
+    """
 
     if request.method == "POST":
 
         column = request.form.to_dict()["column"]
-        new_df.set_col(column)
+        app.df.set_col(column)
 
-        return "DONE" if new_df.download() else "FAILED"
+        return "DONE" if app.df.download() else "FAILED"
 
-    return render_template("columns.html", columns=new_df.get_cols())
+    return render_template("columns.html", columns=app.df.get_cols())

@@ -3,7 +3,8 @@
 
 """env
 
-Makefile helper script to determine if virtualenv is activated"""
+Makefile helper script to determine if virtualenv is activated
+"""
 
 if __name__ == '__main__':
 

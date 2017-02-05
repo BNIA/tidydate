@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# pylint: disable=unused-import
+
+"""config
+
+This file instantiates the Flask app and other configurations
+"""
 
 from __future__ import absolute_import, print_function, unicode_literals
 import string
@@ -20,6 +24,7 @@ app.secret_key = ''.join(
     ) for _ in range(int(uniform(10, 20)))
 )
 app.file_name = ""
+app.df = None
 
 
 def allowed_file(file_name):
