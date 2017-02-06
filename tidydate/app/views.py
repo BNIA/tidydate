@@ -8,32 +8,24 @@ This file contains the endpoints for rendering the interface and implementing
 the backend modules
 """
 
-from __future__ import absolute_import, print_function, unicode_literals
 from os import path
 
-from flask import request, redirect, url_for, render_template
-from werkzeug import secure_filename
+from sanic.response import json
 
-from .config import allowed_file, app
+from .config import allowed_file, app, render_template, UPLOAD_FOLDER
 from .context import modules
 from modules import tidydate
 
 
 @app.route('/')
-def index():
-    """Renders the index page
+async def test(request):
+    data = {'name': 'name'}
 
-    Args:
-        None
-
-    Returns:
-        (`obj`): rendered template
-    """
-    return render_template('index.html')
+    return render_template("index.html", name=data["name"])
 
 
 @app.route('/upload', methods=["GET", "POST"])
-def upload():
+async def upload(request):
     """Handles the uploaded file
 
     Args:
@@ -46,24 +38,26 @@ def upload():
 
     if request.method == 'POST':
 
-        file = request.files['file']
+        file = request.files.get("file")
 
-        if file and allowed_file(file.filename):
+        if file and allowed_file(file.name):
 
-            app.file_name = secure_filename(file.filename)
-            file.save(path.join(app.config['UPLOAD_FOLDER'], app.file_name))
+            app.file_name = file.name
 
-            return redirect(url_for("upload"))
+            with open(
+                path.join(UPLOAD_FOLDER, app.file_name), 'wb'
+            ) as upload_file:
+                upload_file.write(file.body)
 
-    app.df = tidydate.TidyDate(
-        path.join(app.config['UPLOAD_FOLDER'], app.file_name)
-    )
+            return json({"received": True, "file_names": file.name})
 
-    return redirect(url_for("parse_date", file_name=app.file_name))
+    app.df = tidydate.TidyDate(path.join(UPLOAD_FOLDER, app.file_name))
+
+    return parse_date(request, app.file_name)
 
 
-@app.route('/upload/<file_name>', methods=["GET", "POST"])
-def parse_date(file_name):
+@app.route('/parse', methods=["GET", "POST"])
+def parse_date(request, file_name):
     """Parses the uploaded file
 
     Args:
@@ -76,9 +70,11 @@ def parse_date(file_name):
 
     if request.method == "POST":
 
-        column = request.form.to_dict()["column"]
+        column = request.form["column"][0]
         app.df.set_col(column)
 
-        return "DONE" if app.df.download() else "FAILED"
+        status_payload = "success" if app.df.download() else "failed"
+
+        return json({"status": status_payload})
 
     return render_template("columns.html", columns=app.df.get_cols())

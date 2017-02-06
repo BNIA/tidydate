@@ -6,18 +6,19 @@
 This file instantiates the Flask app and other configurations
 """
 
-from __future__ import absolute_import, print_function, unicode_literals
 import string
 from random import SystemRandom, uniform
 
-from flask import Flask
+from jinja2 import Environment, PackageLoader
+from sanic import Sanic
+from sanic.response import html
 
 UPLOAD_FOLDER = "uploads"
 ALLOWED_EXTENSIONS = {"csv", "xlsx"}
 
-app = Flask(__name__)
+app = Sanic()
+env = Environment(loader=PackageLoader('app', 'templates'))
 
-app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 app.secret_key = ''.join(
     SystemRandom().choice(
         string.ascii_letters + string.digits
@@ -25,6 +26,12 @@ app.secret_key = ''.join(
 )
 app.file_name = ""
 app.df = None
+
+
+def render_template(file_name, **kwargs):
+
+    template = env.get_template(file_name)
+    return html(template.render(kwargs))
 
 
 def allowed_file(file_name):
