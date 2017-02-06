@@ -59,9 +59,7 @@ def upload():
         path.join(app.config['UPLOAD_FOLDER'], app.file_name)
     )
 
-    return redirect(
-        url_for("parse_date", file_name=app.file_name)
-    )
+    return redirect(url_for("parse_date", file_name=app.file_name))
 
 
 @app.route('/upload/<file_name>', methods=["GET", "POST"])
