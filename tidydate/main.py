@@ -3,14 +3,13 @@
 
 """main
 
-
+This file serves as the driver for the program by initializing the Sanic app
 """
 
-from __future__ import absolute_import, print_function, unicode_literals
 from os import path
 import webbrowser
 
-from frontend import views
+from app import views
 
 if __name__ == '__main__':
 
@@ -30,4 +29,4 @@ if __name__ == '__main__':
             "http://localhost:{PORT}".format(PORT=port)
         )
 
-        views.app.run(port=int(port))
+        views.app.run(host="0.0.0.0", port=int(port))
