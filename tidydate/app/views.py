@@ -9,7 +9,6 @@ the backend modules
 """
 
 from os import path
-import sys
 
 from sanic.response import json
 
@@ -19,10 +18,16 @@ from modules import tidydate
 
 
 @app.route('/')
-async def test(request):
-    data = {'name': 'name'}
+async def index(request):
+    """Renders the index
 
-    return render_template("index.html", name=data["name"])
+    Args:
+        None
+
+    Returns:
+        rendered template of "index.html"
+    """
+    return render_template("index.html")
 
 
 @app.route('/upload', methods=["GET", "POST"])
@@ -62,11 +67,11 @@ async def parse_date(request, file_name):
 
     Returns:
         if POST: (`str`): status of parsing file
-        if GET: (`list` of `str`): list of column names in file
+        if GET: (`list` of `str`): list of column names in file in rendered
+                template of "columns.html"
     """
 
     if request.method == "POST":
-        print(request)
         column = request.form["column"][0]
         app.df.set_col(column)
 
@@ -78,6 +83,6 @@ async def parse_date(request, file_name):
 
 
 @app.route('/exit')
-def shutdown(request):
-    sys.exit(0)
-    # return json({"received": True})
+async def shutdown(request):
+    """TODO: figure out how to safely shut server down"""
+    raise KeyboardInterrupt

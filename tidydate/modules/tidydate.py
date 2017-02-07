@@ -9,11 +9,12 @@ ISO 8601 formatted dates (YYYY-MM-DD).
 """
 
 from __future__ import absolute_import, print_function, unicode_literals
-from os import path, remove
+from os import remove
 import sys
 from textwrap import dedent
 
 import dateparser
+from numpy import where as np_where
 from pandas import notnull, read_csv, read_excel
 
 
@@ -183,4 +184,9 @@ class TidyDate(object):
 
         self.df.to_csv(new_file, index=False)
 
-        return path.isfile(new_file)
+        return False in set(
+            np_where(
+                self.df[self.column] == self.df["tidy_date"],
+                True, False
+            )
+        )
