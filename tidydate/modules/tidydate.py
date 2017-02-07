@@ -49,6 +49,7 @@ class TidyDate(object):
         Returns:
             None
         """
+        print("DESTRUCTOR CALLED")
         remove(self.file_path)
 
     def to_df(self):

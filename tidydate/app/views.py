@@ -9,6 +9,7 @@ the backend modules
 """
 
 from os import path
+import sys
 
 from sanic.response import json
 
@@ -32,8 +33,7 @@ async def upload(request):
         None
 
     Returns:
-        if POST: redirect here
-        if GET: pass path of downloaded file on to be parsed
+        if POST: return upload success response
     """
 
     if request.method == 'POST':
@@ -48,16 +48,13 @@ async def upload(request):
                 path.join(UPLOAD_FOLDER, app.file_name), 'wb'
             ) as upload_file:
                 upload_file.write(file.body)
+            app.df = tidydate.TidyDate(path.join(UPLOAD_FOLDER, app.file_name))
 
             return json({"received": True, "file_names": file.name})
 
-    app.df = tidydate.TidyDate(path.join(UPLOAD_FOLDER, app.file_name))
 
-    return parse_date(request, app.file_name)
-
-
-@app.route('/parse', methods=["GET", "POST"])
-def parse_date(request, file_name):
+@app.route('/<file_name>', methods=["GET", "POST"])
+async def parse_date(request, file_name):
     """Parses the uploaded file
 
     Args:
@@ -69,7 +66,7 @@ def parse_date(request, file_name):
     """
 
     if request.method == "POST":
-
+        print(request)
         column = request.form["column"][0]
         app.df.set_col(column)
 
@@ -78,3 +75,9 @@ def parse_date(request, file_name):
         return json({"status": status_payload})
 
     return render_template("columns.html", columns=app.df.get_cols())
+
+
+@app.route('/exit')
+def shutdown(request):
+    sys.exit(0)
+    # return json({"received": True})

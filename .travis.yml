@@ -1,0 +1,20 @@
+language: python
+
+python:
+  - "3.5"  # because Sanic
+
+branches:
+  only:
+  - master  # only build master
+
+# install dependencies
+install:
+  "pip install -r requirements.txt"
+
+# run tests
+script:
+  make test
+
+# turn off email notifications
+notifications:
+  email: false
