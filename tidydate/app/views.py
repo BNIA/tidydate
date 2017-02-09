@@ -8,17 +8,19 @@ This file contains the endpoints for rendering the interface and implementing
 the backend modules
 """
 
+from __future__ import absolute_import, print_function, unicode_literals
 from os import path
 
-from sanic.response import json
+from flask import jsonify, render_template, request
+from werkzeug import secure_filename
 
-from .config import allowed_file, app, render_template, UPLOAD_FOLDER
+from .config import allowed_file, app, UPLOAD_FOLDER
 from .context import modules
 from modules import tidydate
 
 
 @app.route('/')
-async def index(request):
+def index():
     """Renders the index
 
     Args:
@@ -31,7 +33,7 @@ async def index(request):
 
 
 @app.route('/upload', methods=["GET", "POST"])
-async def upload(request):
+def upload():
     """Handles the uploaded file
 
     Args:
@@ -43,23 +45,25 @@ async def upload(request):
 
     if request.method == 'POST':
 
-        file = request.files.get("file")
+        file = request.files['file']
 
-        if file and allowed_file(file.name):
+        if file and allowed_file(file.filename):
 
-            app.file_name = file.name
-
-            with open(
-                path.join(UPLOAD_FOLDER, app.file_name), 'wb'
-            ) as upload_file:
-                upload_file.write(file.body)
+            app.file_name = secure_filename(file.filename)
+            print("HEY LPPOK", app.file_name)
+            file.save(path.join(UPLOAD_FOLDER, app.file_name))
+            # with open(
+            #     path.join(UPLOAD_FOLDER, app.file_name), 'wb'
+            # ) as upload_file:
+            #     upload_file.write(file.body)
+            print(path.join(UPLOAD_FOLDER, app.file_name))
             app.df = tidydate.TidyDate(path.join(UPLOAD_FOLDER, app.file_name))
 
-            return json({"received": True, "file_names": file.name})
+            return jsonify({"received": True, "file_names": file.name})
 
 
 @app.route('/<file_name>', methods=["GET", "POST"])
-async def parse_date(request, file_name):
+def parse_date(file_name):
     """Parses the uploaded file
 
     Args:
@@ -72,17 +76,27 @@ async def parse_date(request, file_name):
     """
 
     if request.method == "POST":
-        column = request.form["column"][0]
+        column = request.form.to_dict()["column"]
         app.df.set_col(column)
 
         status_payload = "success" if app.df.download() else "failed"
 
-        return json({"status": status_payload})
+        return jsonify({"status": status_payload})
 
     return render_template("columns.html", columns=app.df.get_cols())
 
 
-@app.route('/exit')
-async def shutdown(request):
+def shutdown_server():
     """TODO: figure out how to safely shut server down"""
-    raise KeyboardInterrupt
+
+    werkzeug_server = request.environ.get('werkzeug.server.shutdown')
+    if not werkzeug_server:
+        raise RuntimeError('Not running with the Werkzeug Server')
+
+    werkzeug_server()
+
+
+@app.route('/exit')
+def shutdown():
+    shutdown_server()
+    return 'Server shutting down...'
