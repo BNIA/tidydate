@@ -3,7 +3,7 @@
 
 """config
 
-This file instantiates the Flask app and other configurations
+This file instantiates the Sanic app and other configurations
 """
 
 import string
@@ -24,7 +24,6 @@ app.secret_key = ''.join(
         string.ascii_letters + string.digits
     ) for _ in range(int(uniform(10, 20)))
 )
-app.file_name = ""
 app.df = None
 
 

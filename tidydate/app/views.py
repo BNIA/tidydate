@@ -47,13 +47,11 @@ async def upload(request):
 
         if file and allowed_file(file.name):
 
-            app.file_name = file.name
-
             with open(
-                path.join(UPLOAD_FOLDER, app.file_name), 'wb'
+                path.join(UPLOAD_FOLDER, file.name), 'wb'
             ) as upload_file:
                 upload_file.write(file.body)
-            app.df = tidydate.TidyDate(path.join(UPLOAD_FOLDER, app.file_name))
+            app.df = tidydate.TidyDate(path.join(UPLOAD_FOLDER, file.name))
 
             return json({"received": True, "file_names": file.name})
 
