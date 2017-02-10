@@ -19,12 +19,12 @@ ALLOWED_EXTENSIONS = {"csv", "xlsx"}
 app = Sanic()
 env = Environment(loader=PackageLoader('app', 'templates'))
 
+app.df = None
 app.secret_key = ''.join(
     SystemRandom().choice(
         string.ascii_letters + string.digits
     ) for _ in range(int(uniform(10, 20)))
 )
-app.df = None
 
 
 def render_template(file_name, **kwargs):
