@@ -15,11 +15,6 @@ if __name__ == '__main__':
 
     port_file_name = "port.txt"
 
-    from time import sleep
-
-    def x():
-        sleep(5)
-
     if not path.exists(port_file_name):
         with open(port_file_name, 'w') as port_file:
             port = ""

@@ -9,7 +9,6 @@ the backend modules
 """
 
 from os import path
-import sys
 
 from sanic.response import json
 
@@ -19,13 +18,19 @@ from modules import tidydate
 
 
 @app.route('/')
-async def test(request):
-    data = {'name': 'name'}
+async def index(request):
+    """Renders the index
 
-    return render_template("index.html", name=data["name"])
+    Args:
+        None
+
+    Returns:
+        rendered template of "index.html"
+    """
+    return render_template("index.html")
 
 
-@app.route('/upload', methods=["GET", "POST"])
+@app.route("/upload", methods=["GET", "POST"])
 async def upload(request):
     """Handles the uploaded file
 
@@ -36,24 +41,22 @@ async def upload(request):
         if POST: return upload success response
     """
 
-    if request.method == 'POST':
+    if request.method == "POST":
 
         file = request.files.get("file")
 
         if file and allowed_file(file.name):
 
-            app.file_name = file.name
-
             with open(
-                path.join(UPLOAD_FOLDER, app.file_name), 'wb'
+                path.join(UPLOAD_FOLDER, file.name), "wb"
             ) as upload_file:
                 upload_file.write(file.body)
-            app.df = tidydate.TidyDate(path.join(UPLOAD_FOLDER, app.file_name))
+            app.df = tidydate.TidyDate(path.join(UPLOAD_FOLDER, file.name))
 
             return json({"received": True, "file_names": file.name})
 
 
-@app.route('/<file_name>', methods=["GET", "POST"])
+@app.route("/<file_name>", methods=["GET", "POST"])
 async def parse_date(request, file_name):
     """Parses the uploaded file
 
@@ -62,11 +65,11 @@ async def parse_date(request, file_name):
 
     Returns:
         if POST: (`str`): status of parsing file
-        if GET: (`list` of `str`): list of column names in file
+        if GET: (`list` of `str`): list of column names in file in rendered
+                template of "columns.html"
     """
 
     if request.method == "POST":
-        print(request)
         column = request.form["column"][0]
         app.df.set_col(column)
 
@@ -74,10 +77,11 @@ async def parse_date(request, file_name):
 
         return json({"status": status_payload})
 
-    return render_template("columns.html", columns=app.df.get_cols())
+    if app.df:
+        return render_template("columns.html", columns=app.df.get_cols())
 
 
-@app.route('/exit')
-def shutdown(request):
-    sys.exit(0)
-    # return json({"received": True})
+@app.route("/exit")
+async def shutdown(request):
+    """TODO: figure out how to safely shut server down"""
+    raise KeyboardInterrupt

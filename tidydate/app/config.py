@@ -3,7 +3,7 @@
 
 """config
 
-This file instantiates the Flask app and other configurations
+This file instantiates the Sanic app and other configurations
 """
 
 import string
@@ -19,13 +19,12 @@ ALLOWED_EXTENSIONS = {"csv", "xlsx"}
 app = Sanic()
 env = Environment(loader=PackageLoader('app', 'templates'))
 
+app.df = None
 app.secret_key = ''.join(
     SystemRandom().choice(
         string.ascii_letters + string.digits
     ) for _ in range(int(uniform(10, 20)))
 )
-app.file_name = ""
-app.df = None
 
 
 def render_template(file_name, **kwargs):

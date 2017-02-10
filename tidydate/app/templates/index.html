@@ -1,8 +1,26 @@
-{% include "components/styles.html" %}
-{% include "components/scripts.html" %}
+<head>
+    <title>TidyDate</title>
+
+    {% include "components/styles.html" %}    
+
+    <style type="text/css">
+        #clickable {
+          position: absolute;
+          width: 300px;
+          height: 200px;
+          z-index: 15;
+          top: 50%;
+          left: 50%;
+          margin: -100px 0 0 -150px;
+      }
+  </style>
+
+</head>
 
 <div id="previews" class="dropzone-previews"></div>
 <button id="clickable">Click me to select files</button>
+
+{% include "components/scripts.html" %}
 
 <script type="text/javascript">
     var myDropzone = new Dropzone(document.body, { // make the whole body a dropzone
