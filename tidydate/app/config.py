@@ -10,13 +10,13 @@ import string
 from random import SystemRandom, uniform
 
 from jinja2 import Environment, PackageLoader
-from sanic import Sanic
-from sanic.response import html
+from flask import Flask
+
 
 UPLOAD_FOLDER = "uploads"
 ALLOWED_EXTENSIONS = {"csv", "xlsx"}
 
-app = Sanic()
+app = Flask(__name__)
 env = Environment(loader=PackageLoader('app', 'templates'))
 
 app.secret_key = ''.join(
@@ -24,14 +24,7 @@ app.secret_key = ''.join(
         string.ascii_letters + string.digits
     ) for _ in range(int(uniform(10, 20)))
 )
-app.file_name = ""
 app.df = None
-
-
-def render_template(file_name, **kwargs):
-
-    template = env.get_template(file_name)
-    return html(template.render(kwargs))
 
 
 def allowed_file(file_name):
