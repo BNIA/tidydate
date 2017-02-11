@@ -5,19 +5,19 @@
 
 </head>
 
-<div id="previews" class="dropzone-previews"></div>
-<button id="clickable">Click me to select files</button>
+<div style="display: none;" id="previews" class="dropzone-previews"></div>
+<button id="clickable">Click or drag and drop files anywhere</button>
 
 {% include "components/scripts.html" %}
 
 <script type="text/javascript">
     var myDropzone = new Dropzone(document.body, { // make the whole body a dropzone
-        url: "/upload", // set the url
+        url: "/upload",
         previewsContainer: "#previews",
         clickable: "#clickable"
     });
 
-    myDropzone.on("success", function(file, response){
+    myDropzone.on("success", function(file, response) {
         location.href = file.name;
     });
 

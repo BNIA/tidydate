@@ -32,7 +32,7 @@ def index():
     return render_template("index.html")
 
 
-@app.route('/upload', methods=["GET", "POST"])
+@app.route("/upload", methods=["POST"])
 def upload():
     """Handles the uploaded file
 
@@ -43,26 +43,21 @@ def upload():
         if POST: return upload success response
     """
 
-    if request.method == 'POST':
+    if request.method == "POST":
 
-        file = request.files['file']
+        file = request.files["file"]
 
         if file and allowed_file(file.filename):
 
             app.file_name = secure_filename(file.filename)
-            print("HEY LPPOK", app.file_name)
             file.save(path.join(UPLOAD_FOLDER, app.file_name))
-            # with open(
-            #     path.join(UPLOAD_FOLDER, app.file_name), 'wb'
-            # ) as upload_file:
-            #     upload_file.write(file.body)
-            print(path.join(UPLOAD_FOLDER, app.file_name))
+
             app.df = tidydate.TidyDate(path.join(UPLOAD_FOLDER, app.file_name))
 
             return jsonify({"received": True, "file_names": file.name})
 
 
-@app.route('/<file_name>', methods=["GET", "POST"])
+@app.route("/<file_name>", methods=["GET", "POST"])
 def parse_date(file_name):
     """Parses the uploaded file
 
@@ -83,20 +78,29 @@ def parse_date(file_name):
 
         return jsonify({"status": status_payload})
 
-    return render_template("columns.html", columns=app.df.get_cols())
+    if app.df:
+        return render_template("columns.html", columns=app.df.get_cols())
+
+    return render_template("columns.html")
 
 
-def shutdown_server():
-    """TODO: figure out how to safely shut server down"""
+@app.route("/exit")
+def shutdown():
+    """Calls the destructor and shuts down server
 
-    werkzeug_server = request.environ.get('werkzeug.server.shutdown')
+    Args:
+        None
+
+    Returns:
+        (`str`): Server shutdown message
+    """
+
+    del app.df
+
+    werkzeug_server = request.environ.get("werkzeug.server.shutdown")
     if not werkzeug_server:
-        raise RuntimeError('Not running with the Werkzeug Server')
+        raise RuntimeError("Not running with the Werkzeug Server")
 
     werkzeug_server()
 
-
-@app.route('/exit')
-def shutdown():
-    shutdown_server()
-    return 'Server shutting down...'
+    return "Server shutting down..."
