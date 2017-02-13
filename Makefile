@@ -8,9 +8,7 @@ REQ=requirements.txt
 .PHONY: clean
 clean:
 	# clean out cache and temporary files
-	@find . \( \
-		-name "*.pyc" -o -name "output.csv" -o -name "checkpoint.json" -o \
-		-name "test_output.csv" \) -type f -delete
+	@find . \( -name "*.pyc" -o -name "port.txt" \) -type f -delete
 	@find . -name "__pycache__" -type d -delete
 
 
