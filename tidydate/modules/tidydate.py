@@ -9,11 +9,12 @@ ISO 8601 formatted dates (YYYY-MM-DD).
 """
 
 from __future__ import absolute_import, print_function, unicode_literals
+
+from dateutil.parser import parse
 from os import remove
 import sys
 from textwrap import dedent
 
-import dateparser
 from numpy import where as np_where
 from pandas import notnull, read_csv, read_excel
 
@@ -52,6 +53,15 @@ class TidyDate(object):
         """
         remove(self.file_path)
 
+    @staticmethod
+    def parse_date(date_str):
+
+        try:
+            return parse(date_str)
+
+        except ValueError:
+            return None
+
     def to_df(self):
         """Converts the input file into a Pandas Dataframe
 
@@ -63,7 +73,7 @@ class TidyDate(object):
             (`obj: pandas.Dataframe`): dataframe of the file
         """
 
-        self.file_name, ext = self.file_path.split('.')
+        self.file_name, ext = self.file_path.rsplit('.', 1)
 
         if ext == "csv":
             return read_csv(self.file_path)
@@ -124,8 +134,11 @@ class TidyDate(object):
 
         if self.column:
 
+            for i in self.df[self.column]:
+                print(i, self.parse_date(i))
+
             self.df["tidy_date"] = self.df[self.column].apply(
-                lambda x: dateparser.parse(x)
+                lambda x: self.parse_date(x)
             )
 
             self.df["tidy_date"] = self.df["tidy_date"].apply(
@@ -189,3 +202,10 @@ class TidyDate(object):
                 True, False
             )
         )
+
+
+if __name__ == '__main__':
+
+    obj = TidyDate("../../dummy_data/test.xlsx")
+    obj.set_col("Messy Date")
+    obj.download()
