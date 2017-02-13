@@ -9,7 +9,6 @@ This file instantiates the Flask app and other configurations
 import string
 from random import SystemRandom, uniform
 
-from jinja2 import Environment, PackageLoader
 from flask import Flask
 
 
@@ -17,7 +16,6 @@ UPLOAD_FOLDER = "uploads"
 ALLOWED_EXTENSIONS = {"csv", "xlsx"}
 
 app = Flask(__name__)
-env = Environment(loader=PackageLoader('app', 'templates'))
 
 app.secret_key = ''.join(
     SystemRandom().choice(

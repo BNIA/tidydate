@@ -6,7 +6,7 @@
 This file serves as the driver for the program by initializing the Sanic app
 """
 
-from os import path
+from os import path, makedirs
 import webbrowser
 
 from app import views
@@ -22,6 +22,9 @@ if __name__ == '__main__':
                 port = str(input("Insert port: "))
             port_file.write(port)
 
+    if not path.exists(views.UPLOAD_FOLDER):
+        makedirs(views.UPLOAD_FOLDER)
+
     with open(port_file_name) as port_file:
 
         port = port_file.read()
@@ -29,4 +32,4 @@ if __name__ == '__main__':
             "http://localhost:{PORT}".format(PORT=port)
         )
 
-        views.app.run(host="0.0.0.0", port=int(port), debug=True)
+        views.app.run(host="0.0.0.0", port=int(port))
