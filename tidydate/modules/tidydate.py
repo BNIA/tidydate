@@ -10,7 +10,7 @@ ISO 8601 formatted dates (YYYY-MM-DD).
 
 from __future__ import absolute_import, print_function, unicode_literals
 
-from dateutil.parser import parse
+import dateutil
 from os import remove
 import sys
 from textwrap import dedent
@@ -57,7 +57,7 @@ class TidyDate(object):
     def parse_date(date_str):
 
         try:
-            return parse(date_str)
+            return dateutil.parser.parse(date_str)
 
         except ValueError:
             return None
@@ -202,10 +202,3 @@ class TidyDate(object):
                 True, False
             )
         )
-
-
-if __name__ == '__main__':
-
-    obj = TidyDate("../../dummy_data/test.xlsx")
-    obj.set_col("Messy Date")
-    obj.download()
