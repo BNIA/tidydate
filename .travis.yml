@@ -1,7 +1,7 @@
 language: python
 
 python:
-  - "3.5"  # because Sanic
+  - "2.7"
 
 branches:
   only:
@@ -9,7 +9,9 @@ branches:
 
 # install dependencies
 install:
-  "pip install -r requirements.txt"
+  - "pip install -r requirements.txt"
+  # since dateutil is packaged incorrectly
+  - "pip uninstall python-dateutil && pip install python-dateutil"
 
 # run tests
 script:
