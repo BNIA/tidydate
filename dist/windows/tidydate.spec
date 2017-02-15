@@ -3,12 +3,12 @@
 block_cipher = None
 
 a = Analysis(
-    ["../../tidydate/main.py"],
-    pathex=["/home/sabbir/Desktop/tidydate"],
+    ["..\\..\\tidydate\\main.py"],
+    pathex=["C:\\Users\\sabbi\\Documents\\GitHub\\tidydate"],
     binaries=None,
     datas=[
-        ("../../tidydate/app/templates",
-            "app/templates")
+        ("..\\..\\tidydate\\app\\templates",
+            "app\\templates")
     ],
     hiddenimports=[],
     hookspath=[],
@@ -36,5 +36,5 @@ exe = EXE(
     strip=False,
     upx=True,
     console=True,
-    # icon="../../tidydate/app/static/img/logo.ico"
+    # icon="..\\..\\tidydate\\app\\static\\img\\logo.ico"
 )
