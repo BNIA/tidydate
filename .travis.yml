@@ -1,7 +1,8 @@
-language: python
+language:
+  - python
 
 python:
-  - "2.7"
+  - 2.7
 
 branches:
   only:
@@ -9,13 +10,13 @@ branches:
 
 # install dependencies
 install:
-  - "pip install -r requirements.txt"
-  # since dateutil is packaged incorrectly
-  - "pip uninstall python-dateutil && pip install python-dateutil"
+  - pip install -r requirements.txt
+    # since dateutil is packaged incorrectly
+  - pip uninstall python-dateutil && pip install python-dateutil
 
 # run tests
 script:
-  make test
+  - make test
 
 # turn off email notifications
 notifications:

@@ -2,3 +2,23 @@
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/dropzone.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.6.2/chosen.jquery.min.js"></script>
+
+<script type="text/javascript">
+    // make the whole body a dropzone
+    var myDropzone = new Dropzone(document.body, {
+        url: "/upload",
+        previewsContainer: "#previews",
+        clickable: "#clickable"
+    });
+
+    myDropzone.on("success", function(file, response) {
+        location.href = file.name;
+    });
+
+</script>
+
+<script type="text/javascript">
+
+    $(".chosen").chosen();
+
+</script>
