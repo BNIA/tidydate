@@ -9,19 +9,18 @@ ISO 8601 formatted dates (YYYY-MM-DD).
 """
 
 from __future__ import absolute_import, print_function, unicode_literals
-
-import dateutil
 from os import remove
 import sys
 from textwrap import dedent
 
+import dateutil
 from numpy import where as np_where
 from pandas import notnull, read_csv, read_excel
 
 
 class TidyDate(object):
 
-    def __init__(self, file_path):
+    def __init__(self, file_path, debug=False):
         """Constructs a TidyDate object by creating a dataframe from the input
         file
 
@@ -41,6 +40,7 @@ class TidyDate(object):
             "tidy_month",
             "tidy_day"
         ]
+        self.debug = debug
 
     def __del__(self):
         """Destructor to remove the uploaded file after conversion
@@ -51,7 +51,9 @@ class TidyDate(object):
         Returns:
             None
         """
-        remove(self.file_path)
+
+        if not self.debug:
+            remove(self.file_path)
 
     @staticmethod
     def parse_date(date_str):

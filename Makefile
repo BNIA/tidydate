@@ -8,7 +8,8 @@ REQ=requirements.txt
 .PHONY: clean
 clean:
 	# clean out cache and temporary files
-	@find . \( -name "*.pyc" -o -name "port.txt" \) -type f -delete
+	@find . \( -name "*.pyc" -o -name "port.txt"  -o \
+		-name "*_tidydate.csv" \) -type f -delete
 	@find . -name "__pycache__" -type d -delete
 
 
@@ -32,8 +33,7 @@ update:
 	|| echo 'Activate virtual environment first'
 
 
-# no tests yet
-# .PHONY: test
-# test:
-# 	# run backend unit tests
-# 	@nosetests -v -w tests && rm -rf "tests/test_output.csv" "tests/responses/"
+.PHONY: test
+test:
+	# run backend unit tests
+	@nosetests -v -w tests
