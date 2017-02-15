@@ -1,31 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>TidyDate</title>
+{% extends "components/base.html" %}
 
-    {% include "components/styles.html" %}    
+{% block title_content %} | Column{% endblock %}
 
-</head>
+{% block body_content %}
 
 <body>
-    <form method="POST" class="form-horizontal form-label-left">
+    <form method="POST">
 
-        <div>
-            <select data-placeholder="Select the date column" id="column" name="column" class="chosen">
-                {% for column in columns %}
-                <option value="{{ column }}">{{ column }}</option>
-                {% endfor %}
-            </select>
-            <input type="submit" value="Upload">
+        <div class="outer">
+            <div class="middle">
+                <div class="inner">
+
+                    <section class="flat">
+
+                        <select data-placeholder="Select the date column" id="column" name="column" class="chosen">
+                            {% for column in columns %}
+                            <option value="{{ column }}">{{ column }}</option>
+                            {% endfor %}
+                        </select>
+                        <input type="submit" value="Choose Column">
+                    </section>
+
+                </div>
+            </div>
         </div>
 
     </form>
+
 </body>
 
-{% include "components/scripts.html" %}
-
-<script type="text/javascript">
-    jQuery(".chosen").chosen();
-</script>
-
-</html>
+{% endblock %}

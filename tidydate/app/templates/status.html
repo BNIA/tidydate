@@ -1,0 +1,17 @@
+{% extends "components/base.html" %}
+
+{% block body_content %}
+
+<body>
+
+    <form action="/exit">
+
+        <section class="flat">
+            <div>Response: {{ status }}</div>
+            <input type="submit" value="Shutdown" />            
+        </section>
+    </form>
+
+</body>
+
+{% endblock %}

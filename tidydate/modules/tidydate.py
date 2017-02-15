@@ -134,9 +134,6 @@ class TidyDate(object):
 
         if self.column:
 
-            for i in self.df[self.column]:
-                print(i, self.parse_date(i))
-
             self.df["tidy_date"] = self.df[self.column].apply(
                 lambda x: self.parse_date(x)
             )

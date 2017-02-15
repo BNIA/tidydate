@@ -76,7 +76,7 @@ def parse_date(file_name):
 
         status_payload = "success" if app.df.download() else "failed"
 
-        return jsonify({"status": status_payload})
+        return render_template("status.html", status=status_payload)
 
     if app.df:
         return render_template("columns.html", columns=app.df.get_cols())
