@@ -4,10 +4,10 @@
 
 """test_tidydate
 
+Tests for server-side modules
 """
 
 from __future__ import absolute_import, print_function, unicode_literals
-from os import path
 
 from .context import modules
 from modules import tidydate
