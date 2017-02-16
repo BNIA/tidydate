@@ -17,6 +17,12 @@ from werkzeug import secure_filename
 from .config import allowed_file, app, UPLOAD_FOLDER
 from .context import modules
 from modules import tidydate
+from modules._version import __version__
+
+
+@app.context_processor
+def inject_version():
+    return dict(ver=__version__)
 
 
 @app.route('/')
