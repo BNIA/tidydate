@@ -83,6 +83,8 @@ class TidyDate(object):
         elif ext == "xlsx":
             return read_excel(self.file_path)
 
+        sys.exit("Only CSV and Excel files are supported")
+
     def get_cols(self):
         """Returns the columns found in the input file
 
