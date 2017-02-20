@@ -101,6 +101,7 @@ def shutdown():
         (`str`): Server shutdown message
     """
 
+    # ensures the destructor is called before shutting down
     del app.df
 
     werkzeug_server = request.environ.get("werkzeug.server.shutdown")

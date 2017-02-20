@@ -7,6 +7,8 @@ This module creates spec files for building production executable with
 specific configuration for PyInstaller
 """
 
+from __future__ import absolute_import, print_function, unicode_literals
+
 if __name__ == '__main__':
 
     from os import path
