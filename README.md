@@ -1,6 +1,7 @@
 # tidydate
 
 [![Build Status](https://travis-ci.org/BNIA/tidydate.svg?branch=master)](https://travis-ci.org/BNIA/tidydate)
+
 A tool for parsing and standardizing unstructured date columns into ISO 8601 formats.
 
 
@@ -22,8 +23,6 @@ python-dateutils is used for parsing the various date formats and pandas and num
 
 A standalone executable can be found in the dist directory. The executable was created on a Windows 10 system, and has been tested against Windows 10 systems, and Windows XP, Windows 7 and Windows 8 virtual environments.
 
-
-### Development
 
 ### Development
 
