@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# pylint: disable=unused-import
 
 """test_tidydate
 
@@ -8,14 +7,18 @@ Tests for server-side modules
 """
 
 from __future__ import absolute_import, print_function, unicode_literals
+from os import path
 
-from .context import modules
+from .context import modules  # pylint: disable=unused-import
 from modules import tidydate
 
-FILE_CSV = "test_csv.csv"
-FILE_XLSX = "test_xlsx.xlsx"
+SAMPLE_DIR = "samples"
+FILE_CSV = path.join(SAMPLE_DIR, "test_csv.csv")
+FILE_XLSX = path.join(SAMPLE_DIR, "test_xlsx.xlsx")
+
 VALID_COL = "Messy Date"
 INVALID_COL = "Title"
+DNE_COL = "Meaning of life"
 
 csv_obj = tidydate.TidyDate(FILE_CSV, debug=True)
 xlsx_obj = tidydate.TidyDate(FILE_XLSX, debug=True)
@@ -51,3 +54,13 @@ def test_xlsx_invalid():
     xlsx_obj.set_col(INVALID_COL)
 
     assert(not xlsx_obj.download())
+
+
+def test_xlsx_missing():
+    """Excel file with non-existent column selected"""
+
+    try:
+        xlsx_obj.set_col(DNE_COL)
+
+    except SystemExit:
+        assert(not xlsx_obj.download())

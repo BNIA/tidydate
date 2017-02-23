@@ -26,7 +26,7 @@ A standalone executable can be found in the dist directory. The executable was c
 
 ### Development
 
-If you are not familiar with Python projects on Windows machines, you might want to check out [this quick guide](https://github.com/BNIA/Close-Crawl/blob/dev-sabbir/docs/windows-dev-setup.md).
+If you are not familiar with Python projects on Windows machines, you might want to check out [this quick guide](https://github.com/BNIA/Close-Crawl/blob/master/docs/windows-dev-setup.md).
 
 #### Requirements
 
@@ -44,4 +44,4 @@ The tests run on [nose](http://nose.readthedocs.io/en/latest/). To install, run:
 
 #### Executable
 
-[PyInstaller](http://www.pyinstaller.org/) was used to build the Windows executable. More details on the building process can be found [here](https://github.com/BNIA/Close-Crawl/blob/master/dist/README.md)
+[PyInstaller](http://www.pyinstaller.org/) was used to build the Windows executable. More details on the building process can be found [here](https://github.com/BNIA/tidydate/blob/master/dist/README.md)
