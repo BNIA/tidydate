@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# pylint: disable=unused-import
 
 """views
 
@@ -15,14 +14,8 @@ from flask import jsonify, render_template, request
 from werkzeug import secure_filename
 
 from .config import allowed_file, app, UPLOAD_FOLDER
-from .context import modules
+from .context import modules  # pylint: disable=unused-import
 from modules import tidydate
-from modules._version import __version__
-
-
-@app.context_processor
-def inject_version():
-    return dict(ver=__version__)
 
 
 @app.route('/')
@@ -60,7 +53,7 @@ def upload():
 
             app.df = tidydate.TidyDate(path.join(UPLOAD_FOLDER, app.file_name))
 
-            return jsonify({"received": True, "file_names": file.name})
+            return jsonify({"received": True, "file_name": app.file_name})
 
 
 @app.route("/<file_name>", methods=["GET", "POST"])
