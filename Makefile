@@ -23,6 +23,7 @@ install:
 upgrade:
 	# upgrade PIP on virtual environment
 	@test 1 -eq $(IN_VENV) && pip install -U pip && pip install -r $(REQ) \
+	&& pip uninstall python-dateutil -y && pip install python-dateutil \
 	|| echo 'Activate virtual environment first'
 
 
