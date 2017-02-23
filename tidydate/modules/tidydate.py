@@ -61,7 +61,7 @@ class TidyDate(object):
         try:
             return dateutil.parser.parse(date_str)
 
-        except ValueError:
+        except (ValueError, TypeError):
             return None
 
     def to_df(self):
