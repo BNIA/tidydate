@@ -16,7 +16,7 @@ from textwrap import dedent
 import dateutil
 from numpy import dtype
 from numpy import where as np_where
-from pandas import notnull, read_csv, read_excel, to_datetime
+from pandas import notnull, read_csv, read_excel
 
 
 class TidyDate(object):
@@ -177,9 +177,14 @@ class TidyDate(object):
 
         for index, col in enumerate(self.tidy_date_split):
 
-            self.df[col] = self.df["tidy_date"].apply(
-                lambda x: int(str(x).split("-")[index]) if notnull(x) else x
-            )
+            try:
+
+                self.df[col] = self.df["tidy_date"].apply(
+                    lambda x: int(str(x).split("-")[index]) if notnull(x) else x
+                )
+
+            except IndexError:
+                continue
 
     def fill_na(self):
         """Fills values that were unable to be parsed with the original values

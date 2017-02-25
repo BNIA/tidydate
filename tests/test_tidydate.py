@@ -16,8 +16,8 @@ SAMPLE_DIR = "samples"
 FILE_CSV = path.join(SAMPLE_DIR, "test_csv.csv")
 FILE_XLSX = path.join(SAMPLE_DIR, "test_xlsx.xlsx")
 
-VALID_COL = "Messy Date"
-INVALID_COL = "Title"
+VALID_COL = "Recv_Date"
+INVALID_COL = "Case_Nbr"
 DNE_COL = "Meaning of life"
 
 csv_obj = tidydate.TidyDate(FILE_CSV, debug=True)
