@@ -53,7 +53,10 @@ def upload():
 
             app.df = tidydate.TidyDate(path.join(UPLOAD_FOLDER, app.file_name))
 
-            return jsonify({"received": True, "file_name": app.file_name})
+            response = {"received": True, "file_name": app.file_name}
+
+            print(response)
+            return jsonify(response)
 
 
 @app.route("/<file_name>", methods=["GET", "POST"])
