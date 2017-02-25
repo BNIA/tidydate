@@ -14,8 +14,9 @@ import sys
 from textwrap import dedent
 
 import dateutil
+from numpy import dtype
 from numpy import where as np_where
-from pandas import notnull, read_csv, read_excel
+from pandas import notnull, read_csv, read_excel, to_datetime
 
 
 class TidyDate(object):
@@ -33,6 +34,7 @@ class TidyDate(object):
 
         self.file_path = file_path
         self.file_name = ""
+
         self.df = self.to_df()
         self.column = ""
         self.tidy_date_split = [
@@ -40,6 +42,7 @@ class TidyDate(object):
             "tidy_month",
             "tidy_day"
         ]
+
         self.debug = debug
 
     def __del__(self):
@@ -54,15 +57,6 @@ class TidyDate(object):
 
         if not self.debug:
             remove(self.file_path)
-
-    @staticmethod
-    def parse_date(date_str):
-
-        try:
-            return dateutil.parser.parse(date_str)
-
-        except (ValueError, TypeError):
-            return None
 
     def to_df(self):
         """Converts the input file into a Pandas Dataframe
@@ -126,6 +120,26 @@ class TidyDate(object):
                 )
             )
 
+    @staticmethod
+    def parse_date(date_str):
+
+        try:
+            return dateutil.parser.parse(str(date_str))
+
+        except (TypeError, ValueError):
+
+            try:
+
+                def split_date(date_str):
+
+                    return (date_str[-4:], date_str[:-6], date_str[-6:-4])
+
+                date_str = '-'.join(split_date(str(date_str)))
+                return dateutil.parser.parse(date_str)
+
+            except (TypeError, ValueError):
+                return None
+
     def clean_date_col(self):
         """Parses and standardizes the selected column values
 
@@ -137,6 +151,10 @@ class TidyDate(object):
         """
 
         if self.column:
+
+            if dtype(self.df[self.column]) == dtype("datetime64[ns]"):
+
+                sys.exit("Column is already in date format")
 
             self.df["tidy_date"] = self.df[self.column].apply(
                 lambda x: self.parse_date(x)
@@ -195,7 +213,7 @@ class TidyDate(object):
 
         new_file = self.file_name + "_tidydate.csv"
 
-        self.df.to_csv(new_file, index=False)
+        self.df.to_csv(new_file, encoding='utf-8', index=False, sep=b',')
 
         return False in set(
             np_where(
@@ -203,3 +221,10 @@ class TidyDate(object):
                 True, False
             )
         )
+
+
+if __name__ == '__main__':
+
+    obj = TidyDate("com_permits_2012 (copy).xlsx", debug=True)
+    obj.set_col("Recv_Date")
+    obj.download()
