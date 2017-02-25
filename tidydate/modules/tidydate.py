@@ -218,7 +218,7 @@ class TidyDate(object):
 
         new_file = self.file_name + "_tidydate.csv"
 
-        self.df.to_csv(new_file, encoding='utf-8', index=False, sep=b',')
+        self.df.to_csv(new_file, encoding='utf-8', index=False)
 
         return False in set(
             np_where(
@@ -226,10 +226,3 @@ class TidyDate(object):
                 True, False
             )
         )
-
-
-if __name__ == '__main__':
-
-    obj = TidyDate("com_permits_2012 (copy).xlsx", debug=True)
-    obj.set_col("Recv_Date")
-    obj.download()
