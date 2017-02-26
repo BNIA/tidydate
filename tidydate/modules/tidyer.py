@@ -20,7 +20,7 @@ class TidyDate(object):
     def __init__(self, df, column):
 
         self.df = df
-        self.date_col = column["date"]
+        self.date_col = column
 
     @staticmethod
     def parse_date(date_str):
@@ -41,7 +41,7 @@ class TidyDate(object):
             except (TypeError, ValueError):
                 return None
 
-    def clean_date_col(self):
+    def __clean_col(self):
         """Parses and standardizes the selected column values
 
         Args:
@@ -64,7 +64,7 @@ class TidyDate(object):
                 lambda x: x.date() if pd.notnull(x) else x
             )
 
-    def split_date(self):
+    def __split_date(self):
         """Splits the "tidy_date" column into separate tidy year, month and
         day columns
 
@@ -87,7 +87,7 @@ class TidyDate(object):
             except IndexError:
                 continue
 
-    def fill_na(self):
+    def __fill_na(self):
         """Fills values that were unable to be parsed with the original values
 
         Args:
@@ -98,19 +98,66 @@ class TidyDate(object):
         """
 
         TIDY_DATE_SPLIT.append("tidy_date")
-
         for col in TIDY_DATE_SPLIT:
             self.df[col].fillna(self.df[self.date_col], inplace=True)
 
-    def tidydate(self):
+    def parse(self):
 
-        self.clean_date_col()
-        self.split_date()
-        self.fill_na()
+        self.__clean_col()
+        self.__split_date()
+        self.__fill_na()
 
         return self.df
 
 
-# class TidyBlockNLot(object):
+class TidyBlockNLot(object):
 
-#     def __init__(self, df, column):
+    def __init__(self, df, column):
+
+        self.df = df
+        self.block_col = ""
+        self.lot_col = ""
+        self.blocknlot_col = ""
+
+        for key, value in column.items():
+
+            if key == "block":
+                self.block_col = value
+
+            if key == "lot":
+                self.lot_col = value
+
+    @staticmethod
+    def parse_col(col_str, pad):
+
+        if any(c.isalpha() for c in col_str):
+            return str('0' * pad + col_str)[-pad - 2:]
+
+        return str('0' * pad + col_str)[-pad - 1:]
+
+    def __clean_col(self):
+
+        if self.block_col:
+
+            self.df["tidy_block"] = self.df[self.block_col].astype(str)
+            self.df["tidy_block"] = self.df["tidy_block"].apply(
+                lambda x: self.parse_col(str(x), 3)
+            )
+
+        if self.lot_col:
+
+            self.df["tidy_lot"] = self.df[self.lot_col].astype(str)
+            self.df["tidy_lot"] = self.df["tidy_lot"].apply(
+                lambda x: self.parse_col(str(x), 2)
+            )
+
+        if self.block_col and self.lot_col:
+
+            self.df["tidy_blocknlot"] = self.df[
+                "tidy_block"] + ' ' + self.df["tidy_lot"]
+
+    def parse(self):
+
+        self.__clean_col()
+
+        return self.df

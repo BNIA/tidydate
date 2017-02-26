@@ -17,13 +17,13 @@ import pandas as pd
 import numpy as np
 
 from .settings import VALID_COLS
-from .tidyer import TidyDate
+from .tidyer import TidyDate, TidyBlockNLot
 
 
 class TidyStar(object):
 
-    def __init__(self, file_path, options=["date", "blocknlot"], debug=False):
-        """Constructs a TidyDate object by creating a dataframe from the input
+    def __init__(self, file_path, options=VALID_COLS, debug=False):
+        """Constructs a TidyStar object by creating a dataframe from the input
         file
 
         Args:
@@ -120,8 +120,18 @@ class TidyStar(object):
     def set_options(self):
 
         if "date" in self.options:
-            tidydate_obj = TidyDate(self.df, self.column)
-            self.df = tidydate_obj.tidydate()
+            tidydate_obj = TidyDate(self.df, self.column["date"])
+            self.df = tidydate_obj.parse()
+
+        if "blocknlot" in self.options:
+
+            blocknlot_col = {}
+            for key, value in self.column.items():
+                if key != "date":
+                    blocknlot_col[key] = value
+
+            tidyblocknlot_obj = TidyBlockNLot(self.df, blocknlot_col)
+            self.df = tidyblocknlot_obj.parse()
 
     def download(self):
         """Initializes the parsing and cleaning procedure, and then saves the

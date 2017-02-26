@@ -22,6 +22,14 @@ VALID_COL = {
     "lot": "Lot",
     "blocknlot": "Block_Lot"
 }
+
+INVALID_COL = {
+    "date": "Recv_Date",
+    "block": "Block",
+    "lot": "Lot",
+    "blocknlot": "Block_Lot"
+}
+
 INVALID_COL = "Case_Nbr"
 DNE_COL = "Meaning of life"
 
