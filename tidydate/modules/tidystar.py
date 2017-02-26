@@ -17,7 +17,7 @@ import pandas as pd
 import numpy as np
 
 from .settings import VALID_COLS
-from .tidyer import TidyDate, TidyBlockNLot
+from .tidytools import TidyDate, TidyBlockNLot
 
 
 class TidyStar(object):
@@ -97,20 +97,22 @@ class TidyStar(object):
             None
         """
 
-        if set(column.values()) & self.get_cols():
+        if len(set(column.values()) & self.get_cols()) \
+                == len(set(column.values())):
             self.column = column
 
         else:
             possible_cols = ", ".join(
-                [col for col in list(self.df) if col.lower() in VALID_COLS]
+                [col for col in list(self.df) if any(
+                    x in col.lower() for x in VALID_COLS)]
             )
 
             sys.exit(
                 dedent(
-                    ("Inputted column ({wrong_col}) does not exist.\n"
-                     "Possible date columns are:\n"
+                    ("Inputted columns ({wrong_col}) do not exist.\n"
+                     "Possible columns are:\n"
                      "{cols}".format(
-                         wrong_col=set(column.values()),
+                         wrong_col=", ".join(column.values()),
                          cols=possible_cols
                      )
                      )
@@ -150,9 +152,18 @@ class TidyStar(object):
 
         self.df.to_csv(new_file, encoding="utf-8", index=False)
 
-        return False in set(
-            np.where(
-                self.df[self.column["date"]] == self.df["tidy_date"],
-                True, False
+        match_sets = []
+        for key, value in self.column.items():
+            match_sets.append(key)
+            match_sets.append(
+                set(
+                    np.where(
+                        self.df[value] == self.df["tidy_" + key],
+                        True, False
+                    )
+                )
             )
-        )
+
+        print(match_sets)
+        # l
+        return {True} not in match_sets
