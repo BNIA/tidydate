@@ -10,18 +10,32 @@ from __future__ import absolute_import, print_function, unicode_literals
 from os import path
 
 from .context import modules  # pylint: disable=unused-import
-from modules import tidydate
+from modules import tidystar
 
 SAMPLE_DIR = "samples"
 FILE_CSV = path.join(SAMPLE_DIR, "test_csv.csv")
 FILE_XLSX = path.join(SAMPLE_DIR, "test_xlsx.xlsx")
 
-VALID_COL = "Recv_Date"
-INVALID_COL = "Case_Nbr"
-DNE_COL = "Meaning of life"
+VALID_COL = {
+    "date": "Recv_Date",
+    "block": "Block",
+    "lot": "Lot"
+}
 
-csv_obj = tidydate.TidyDate(FILE_CSV, debug=True)
-xlsx_obj = tidydate.TidyDate(FILE_XLSX, debug=True)
+INVALID_COL = {
+    "date": "Case_Nbr",
+    "block": "Case_Nbr",
+    "lot": "Case_Nbr"
+}
+
+DNE_COL = {
+    "date": "Meaning of life",
+    "block": "Meaning of life",
+    "lot": "Meaning of life"
+}
+
+csv_obj = tidystar.TidyStar(FILE_CSV, debug=True)
+xlsx_obj = tidystar.TidyStar(FILE_XLSX, debug=True)
 
 
 def test_csv_valid():
