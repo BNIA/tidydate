@@ -1,6 +1,6 @@
 {% extends "components/base.html" %}
 
-{% block title_content %} | Column{% endblock %}
+{% block title_content %} | Parameters{% endblock %}
 
 {% block body_content %}
 
@@ -12,10 +12,16 @@
                 <div class="inner">
 
                     <section class="flat">
+                        <p>
+                            {% for option_name, option in options.items() %}
+                                <input type="checkbox" id="{{ option }}" />
+                                <label for="{{ option }}">{{ option_name }}</label>
+                            {% endfor %}
+                        </p>
 
                         <select data-placeholder="Select the date column" id="column" name="column" class="chosen">
                             {% for column in columns %}
-                            <option value="{{ column }}">{{ column }}</option>
+                                <option value="{{ column }}">{{ column }}</option>
                             {% endfor %}
                         </select>
                         <input type="submit" value="Choose Column">

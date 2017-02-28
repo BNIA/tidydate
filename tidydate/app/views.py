@@ -15,7 +15,7 @@ from werkzeug import secure_filename
 
 from .config import allowed_file, app, UPLOAD_FOLDER
 from .context import modules  # pylint: disable=unused-import
-from modules import tidydate
+from modules import tidystar
 
 
 @app.route('/')
@@ -51,11 +51,10 @@ def upload():
             app.file_name = secure_filename(file.filename)
             file.save(path.join(UPLOAD_FOLDER, app.file_name))
 
-            app.df = tidydate.TidyDate(path.join(UPLOAD_FOLDER, app.file_name))
+            app.df = tidystar.TidyStar(path.join(UPLOAD_FOLDER, app.file_name))
 
             response = {"received": True, "file_name": app.file_name}
 
-            print(response)
             return jsonify(response)
 
 
@@ -69,21 +68,30 @@ def parse_date(file_name):
     Returns:
         if POST: (`str`): status of parsing file
         if GET: (`list` of `str`): list of column names in file in rendered
-                template of "columns.html"
+                template of "params.html"
     """
 
     if request.method == "POST":
+        print(request.form.to_dict())
         column = request.form.to_dict()["column"]
         app.df.set_col(column)
+        app.df.set_opt()
 
         status_payload = "success" if app.df.download() else "failed"
 
         return render_template("status.html", status=status_payload)
 
     if app.df:
-        return render_template("columns.html", columns=app.df.get_cols())
+        return render_template(
+            "params.html",
+            columns=app.df.get_cols(),
+            options={
+                "Date": "date",
+                "BlockNLot": "blocknlot"
+            }
+        )
 
-    return render_template("columns.html")
+    return render_template("params.html")
 
 
 @app.route("/exit")
