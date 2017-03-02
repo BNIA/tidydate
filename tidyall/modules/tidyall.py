@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""tidydate
+"""tidyall
 
 This file implements the date cleaning/tidying of TidyDate. It accepts
 *.csv and *.xlsx files and standardizes the specified date column into
@@ -20,9 +20,9 @@ from .settings import VALID_COLS
 from .tidytools import TidyDate, TidyBlockNLot
 
 
-class TidyStar(object):
+class TidyAll(object):
 
-    def __init__(self, file_path, options=VALID_COLS, debug=False):
+    def __init__(self, file_path, debug=False):
         """Constructs a TidyStar object by creating a dataframe from the input
         file
 
@@ -34,13 +34,12 @@ class TidyStar(object):
         """
 
         self.file_path = file_path
-        self.options = options
-        self.file_name = ""
+        self.debug = debug
 
+        self.file_name = ""
         self.df = self.to_df()
         self.column = {}
-
-        self.debug = debug
+        self.options = []
 
     def __del__(self):
         """Destructor to remove the uploaded file after conversion
@@ -119,7 +118,9 @@ class TidyStar(object):
                 )
             )
 
-    def set_options(self):
+    def set_opt(self, options=["date"]):
+
+        self.options = options
 
         if "date" in self.options:
             tidydate_obj = TidyDate(self.df, self.column["date"])
@@ -146,8 +147,6 @@ class TidyStar(object):
             `True` if file was created successfully
         """
 
-        self.set_options()
-
         new_file = self.file_name + "_tidydate.csv"
 
         self.df.to_csv(new_file, encoding="utf-8", index=False)
@@ -164,6 +163,4 @@ class TidyStar(object):
                 )
             )
 
-        print(match_sets)
-        # l
         return {True} not in match_sets

@@ -135,7 +135,7 @@ class TidyBlockNLot(object):
 
         return str('0' * pad + col_str)[-pad - 1:]
 
-    def __clean_col(self):
+    def parse(self):
 
         if self.block_col:
 
@@ -155,9 +155,5 @@ class TidyBlockNLot(object):
 
             self.df["tidy_blocknlot"] = self.df[
                 "tidy_block"] + ' ' + self.df["tidy_lot"]
-
-    def parse(self):
-
-        self.__clean_col()
 
         return self.df

@@ -11,7 +11,7 @@ from __future__ import absolute_import, print_function, unicode_literals
 from os.path import abspath, dirname, join
 import sys
 
-MODULE_PATH = join(dirname(dirname(abspath(__file__))), "tidydate")
+MODULE_PATH = join(dirname(dirname(abspath(__file__))), "tidyall")
 sys.path.append(MODULE_PATH)
 
 import modules

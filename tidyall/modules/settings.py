@@ -1,15 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""tidyer
+"""settings
 
 """
 
 VALID_COLS = [
     "date",
     "block",
-    "lot",
-    "blocknlot"
+    "lot"
 ]
 
 TIDY_DATE_SPLIT = [
