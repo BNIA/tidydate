@@ -10,7 +10,7 @@ from __future__ import absolute_import, print_function, unicode_literals
 from os import path
 
 from .context import modules  # pylint: disable=unused-import
-from modules import tidystar
+from modules import tidyall
 
 SAMPLE_DIR = "samples"
 FILE_CSV = path.join(SAMPLE_DIR, "test_csv.csv")
@@ -39,8 +39,8 @@ DNE_COL = {
     "lot": "Meaning of life"
 }
 
-csv_obj = tidystar.TidyStar(FILE_CSV, debug=True)
-xlsx_obj = tidystar.TidyStar(FILE_XLSX, debug=True)
+csv_obj = tidyall.TidyAll(FILE_CSV, debug=True)
+xlsx_obj = tidyall.TidyAll(FILE_XLSX, debug=True)
 
 
 def test_csv_valid():

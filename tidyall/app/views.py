@@ -15,7 +15,7 @@ from werkzeug import secure_filename
 
 from .config import allowed_file, app, UPLOAD_FOLDER
 from .context import modules  # pylint: disable=unused-import
-from modules import tidystar
+from modules import tidyall
 
 
 @app.route('/')
@@ -51,7 +51,7 @@ def upload():
             app.file_name = secure_filename(file.filename)
             file.save(path.join(UPLOAD_FOLDER, app.file_name))
 
-            app.df = tidystar.TidyStar(
+            app.df = tidyall.TidyAll(
                 path.join(UPLOAD_FOLDER, app.file_name),
                 debug=True
             )

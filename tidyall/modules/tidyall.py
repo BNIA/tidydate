@@ -20,7 +20,7 @@ from .settings import VALID_COLS
 from .tidytools import TidyDate, TidyBlockNLot
 
 
-class TidyStar(object):
+class TidyAll(object):
 
     def __init__(self, file_path, debug=False):
         """Constructs a TidyStar object by creating a dataframe from the input

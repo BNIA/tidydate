@@ -20,7 +20,7 @@ SPEC_STR = """\
         pathex=["{PROJ_PATH}"],
         binaries=None,
         datas=[
-            ("{ROOT}tidydate/{TEMPLATE_PATH}",
+            ("{ROOT}tidyall/{TEMPLATE_PATH}",
                 "{TEMPLATE_PATH}")
         ],
         hiddenimports=[],
@@ -58,10 +58,10 @@ PROJ_DIR = path.dirname(path.dirname(path.dirname(path.abspath(__file__))))
 spec_output = dedent(
     SPEC_STR.format(
         ROOT="../../",
-        MOD_PATH=path.join("tidydate", "main.py"),
+        MOD_PATH=path.join("tidyall", "main.py"),
         PROJ_PATH=PROJ_DIR,
         TEMPLATE_PATH=path.join("app", "templates"),
-        ICO_PATH=path.join("tidydate", "app", "static", "img", "logo.ico")
+        ICO_PATH=path.join("tidyall", "app", "static", "img", "logo.ico")
     )
 )
 
@@ -71,5 +71,5 @@ if platform == "win32":
 
 if __name__ == '__main__':
 
-    with open("tidydate.spec", "w") as spec_file:
+    with open("tidyall.spec", "w") as spec_file:
         spec_file.write(spec_output)

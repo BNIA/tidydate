@@ -1,4 +1,4 @@
-# tidydate
+# TidyAll
 
 [![Build Status](https://travis-ci.org/BNIA/tidydate.svg?branch=master)](https://travis-ci.org/BNIA/tidydate)
 
