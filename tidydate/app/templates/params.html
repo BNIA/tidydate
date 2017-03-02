@@ -13,14 +13,15 @@
 
                     <section class="flat">
                         <p>
-                            {% for option_name, option in options.items() %}
-                                <input type="checkbox" id="{{ option }}" />
+                            {{ opts }}
+                            {% for option_name, option in opts.items() %}
+                                <input type="checkbox" id="{{ option }}" name="{{ option }}"/>
                                 <label for="{{ option }}">{{ option_name }}</label>
                             {% endfor %}
                         </p>
 
                         <select data-placeholder="Select the date column" id="column" name="column" class="chosen">
-                            {% for column in columns %}
+                            {% for column in cols %}
                                 <option value="{{ column }}">{{ column }}</option>
                             {% endfor %}
                         </select>
