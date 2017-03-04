@@ -13,6 +13,7 @@ from random import SystemRandom, uniform
 from flask import Flask
 
 from .context import modules # pylint: disable=unused-import
+from .extra_mods import *
 from modules._version import __version__
 
 UPLOAD_FOLDER = "uploads"
