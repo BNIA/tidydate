@@ -15,6 +15,7 @@ from werkzeug import secure_filename
 
 from .config import allowed_file, app, UPLOAD_FOLDER
 from .context import modules  # pylint: disable=unused-import
+from modules.settings import VALID_COLS
 from modules import tidyall
 
 
@@ -77,12 +78,17 @@ def parse_date(file_name):
     if request.method == "POST":
 
         response = request.form.to_dict()
-        print("LOOOOOOOOOOOOOOOOOOOOOK", response, response.keys())
-        app.df.set_col(response)
+        columns = {
+            key: value for key, value in response.items()
+            if key in VALID_COLS
+        }
+        options = [
+            key.replace("_opt", '') for key in response.keys()
+            if key not in VALID_COLS
+        ]
 
-        del response["column"]
-        print("LOOOOOOOOOOOOOOOOOOOOOK", response, response.keys())
-        app.df.set_opt(response.keys())
+        app.df.set_col(columns)
+        app.df.set_opt(options)
 
         status_payload = "success" if app.df.download() else "fail"
 
@@ -91,11 +97,7 @@ def parse_date(file_name):
     if app.df:
         return render_template(
             "params.html",
-            cols=app.df.get_cols(),
-            opts={
-                "Date": "date",
-                "BlockNLot": "blocknlot"
-            }
+            cols=sorted(app.df.get_cols() | {''})
         )
 
     return render_template("params.html")

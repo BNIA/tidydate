@@ -7,28 +7,42 @@
 <body>
     <form method="POST">
 
-        <div class="outer">
-            <div class="middle">
-                <div class="inner">
+        <div class="jumbotron vertical-center">
+            <div class="container text-center">
 
-                    <section class="flat">
-                        <p>
-                            {{ opts }}
-                            {% for option_name, option in opts.items() %}
-                                <input type="checkbox" id="{{ option }}" name="{{ option }}"/>
-                                <label for="{{ option }}">{{ option_name }}</label>
-                            {% endfor %}
-                        </p>
-
-                        <select data-placeholder="Select the date column" id="column" name="column" class="chosen">
-                            {% for column in cols %}
-                                <option value="{{ column }}">{{ column }}</option>
-                            {% endfor %}
-                        </select>
-                        <input type="submit" value="Choose Column">
-                    </section>
-
+                <div class="row">
+                    <p>
+                        <input type="checkbox" id="date_opt" name="date_opt" checked="on" />
+                        <label for="date_opt">Date</label>
+                        <input type="checkbox" id="blocknlot_opt" name="blocknlot_opt"/>
+                        <label for="blocknlot_opt">BlockNLot</label>
+                    </p>
                 </div>
+
+                <div class="row">
+                    <select data-placeholder="Date column" id="date_column" name="date" class="chosen">
+                        {% for column in cols %}
+                            <option value="{{ column }}">{{ column }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <select data-placeholder="Block column" id="block_column" name="block" class="chosen_bnl" disabled="true">
+                        {% for column in cols %}
+                            <option value="{{ column }}">{{ column }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <select data-placeholder="Lot column" id="lot_column" name="lot" class="chosen_bnl" disabled="true">
+                        {% for column in cols %}
+                            <option value="{{ column }}">{{ column }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <p style="margin-top: 10%;">
+                    <input type="submit" value="Choose Column">
+                </p>
+
             </div>
         </div>
 

@@ -1,5 +1,6 @@
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/dropzone.css">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.6.2/chosen.min.css">
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
 <style type="text/css">
 
@@ -16,62 +17,10 @@
         display: none;
     }
 
-
-    /* column form */
-    .outer {
-        display: table;
-        position: absolute;
-        height: 100%;
-        width: 100%;
+    /* dropdowns */
+    .chosen, .chosen_bnl {
+        width: 25%;
     }
-
-    .middle {
-        display: table-cell;
-        vertical-align: middle;
-    }
-
-    .inner {
-        margin-left: auto;
-        margin-right: auto; 
-        width: 20%;
-    }
-
-    /* buttons */
-    input[type=submit] {
-        display: inline-block;
-        margin: 0 10px 0 0;
-        padding: 5px 5px;
-        font-family: "Bitter",serif;
-        line-height: 1.8;
-        appearance: none;
-        box-shadow: none;
-        border-radius: 0;
-    }
-
-    input[type=submit]:focus {
-        outline: none
-    }
-
-    section.flat input[type=submit] {
-        color: #fff;
-        background-color: #6496c8;
-        text-shadow: -1px 1px #417cb8;
-        border: none;
-    }
-
-    section.flat input[type=submit]:hover,
-    section.flat input[type=submit].hover {
-        background-color: #346392;
-        text-shadow: -1px 1px #27496d;
-    }
-
-    section.flat input[type=submit]:active,
-    section.flat input[type=submit].active {
-        background-color: #27496d;
-        text-shadow: -1px 1px #193047;
-    }
-
-
 
     /* Base for label styling */
 
@@ -159,12 +108,29 @@
         border: 2px dotted blue;
     }
 
+    .vertical-center {
+        min-height: 100%;  /* Fallback for vh unit */
+        min-height: 100vh; 
+        /* Make it a flex container */
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex; 
 
-    /* hover style just for information */
+        /* Align the bootstrap's container vertically */
+        -webkit-box-align : center;
+        -webkit-align-items : center;
+        -moz-box-align : center;
+        -ms-flex-align : center;
+        align-items : center;
+        width: 100%;
 
-    label:hover:before {
-        border: 2px solid #4778d9!important;
+        -webkit-box-pack : center;
+        -moz-box-pack : center;
+        -ms-flex-pack : center;
+        -webkit-justify-content : center;
+        justify-content : center;
     }
-
 
 </style>
