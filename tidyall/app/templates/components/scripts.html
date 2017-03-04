@@ -2,6 +2,7 @@
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/dropzone.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.6.2/chosen.jquery.min.js"></script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
     // make the whole body a dropzone
@@ -19,6 +20,24 @@
 
 <script type="text/javascript">
 
-    $(".chosen").chosen();
+    $(".chosen").chosen({
+        no_results_text: "Nothing found!",
+        allow_single_deselect: true,
+        search_contains: true
+    });
+
+    $(".chosen_bnl").chosen({
+        no_results_text: "Nothing found!",
+        allow_single_deselect: true,
+        search_contains: true
+    });
+
+    $("#date_opt").on("change" ,function(){
+        $(".chosen").attr("disabled", !this.checked).trigger("chosen:updated");
+    });
+
+    $("#blocknlot_opt").on("change" ,function(){
+        $(".chosen_bnl").attr("disabled", !this.checked).trigger("chosen:updated");
+    });
 
 </script>
