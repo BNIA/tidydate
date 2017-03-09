@@ -44,7 +44,7 @@ SPEC_STR = """\
         a.binaries,
         a.zipfiles,
         a.datas,
-        name="tidydate",
+        name="tidyall",
         debug=False,
         strip=False,
         upx=True,
