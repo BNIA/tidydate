@@ -49,7 +49,7 @@ SPEC_STR = """\
         strip=False,
         upx=True,
         console=True,
-        # icon="{ROOT}{ICO_PATH}"
+        icon="{ROOT}{ICO_PATH}"
     )
 """
 
