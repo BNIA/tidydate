@@ -3,9 +3,6 @@
 
 """tidyall
 
-This file implements the date cleaning/tidying of TidyDate. It accepts
-*.csv and *.xlsx files and standardizes the specified date column into
-ISO 8601 formatted dates (YYYY-MM-DD).
 """
 
 from __future__ import absolute_import, print_function, unicode_literals
@@ -23,7 +20,7 @@ from .tidytools import TidyDate, TidyBlockNLot
 class TidyAll(object):
 
     def __init__(self, file_path, debug=False):
-        """Constructs a TidyStar object by creating a dataframe from the input
+        """Constructs a TidyAll object by creating a dataframe from the input
         file
 
         Args:
@@ -96,8 +93,10 @@ class TidyAll(object):
             None
         """
 
-        if len(set(column.values()) & self.get_cols()) \
-                == len(set(column.values())):
+        column_vals = column.values()
+
+        if len(set(column_vals) & self.get_cols()) \
+                == len(set(column_vals)):
             self.column = column
 
         else:
@@ -111,7 +110,7 @@ class TidyAll(object):
                     ("Inputted columns ({wrong_col}) do not exist.\n"
                      "Possible columns are:\n"
                      "{cols}".format(
-                         wrong_col=", ".join(column.values()),
+                         wrong_col=", ".join(column_vals),
                          cols=possible_cols
                      )
                      )

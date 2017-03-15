@@ -35,7 +35,7 @@ SPEC_STR = """\
     pyz = PYZ(
         a.pure,
         a.zipped_data,
-        cipher=block_cipher
+        cipher=None
     )
 
     exe = EXE(
@@ -44,12 +44,12 @@ SPEC_STR = """\
         a.binaries,
         a.zipfiles,
         a.datas,
-        name="tidydate",
+        name="tidyall",
         debug=False,
         strip=False,
         upx=True,
         console=True,
-        # icon="{ROOT}{ICO_PATH}"
+        icon="{ROOT}{ICO_PATH}"
     )
 """
 

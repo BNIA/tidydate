@@ -1,8 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""tidyer
+"""tidytools
 
+This file declares and implements the TidyDate and TidyBlockNLot classes for
+TidyAll.
+
+TidyDate converts and formats valid date columns into ISO 8601 (yyyy-mm-dd).
+TidyBlockNLot converts integer block and lot columns into string, pads them
+with zeros and creates the tidy_blocknlot column.
 """
 
 from __future__ import absolute_import, print_function, unicode_literals
@@ -18,6 +24,7 @@ from .settings import TIDY_DATE_SPLIT
 class TidyDate(object):
 
     def __init__(self, df, column):
+        """Wraps a TidyDate object around a TidyAll dataframe"""
 
         self.df = df
         self.date_col = column
@@ -117,7 +124,6 @@ class TidyBlockNLot(object):
         self.df = df
         self.block_col = ""
         self.lot_col = ""
-        self.blocknlot_col = ""
 
         for key, value in column.items():
 

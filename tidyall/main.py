@@ -28,8 +28,8 @@ if __name__ == '__main__':
     with open(port_file_name) as port_file:
 
         port = port_file.read()
-        # webbrowser.get().open_new_tab(
-        #     "http://localhost:{PORT}".format(PORT=port)
-        # )
+        webbrowser.get().open_new_tab(
+            "http://localhost:{PORT}".format(PORT=port)
+        )
 
-        views.app.run(port=int(port), debug=True)
+        views.app.run(port=int(port))

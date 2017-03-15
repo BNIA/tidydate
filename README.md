@@ -1,6 +1,6 @@
 # TidyAll
 
-[![Build Status](https://travis-ci.org/BNIA/tidydate.svg?branch=master)](https://travis-ci.org/BNIA/tidydate)
+[![Build Status](https://travis-ci.org/BNIA/tidyall.svg?branch=master)](https://travis-ci.org/BNIA/tidyall)
 
 A tool for parsing and standardizing unstructured date columns into ISO 8601 formats.
 
