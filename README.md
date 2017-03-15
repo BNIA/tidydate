@@ -1,4 +1,7 @@
-# TidyAll
+<div align="center">
+  <img src="https://raw.githubusercontent.com/BNIA/tidyall/master/tidyall/app/static/img/logo.png">
+</div>
+-------------
 
 [![Build Status](https://travis-ci.org/BNIA/tidyall.svg?branch=master)](https://travis-ci.org/BNIA/tidyall)
 
