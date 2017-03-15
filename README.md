@@ -5,12 +5,12 @@
 
 [![Build Status](https://travis-ci.org/BNIA/tidyall.svg?branch=master)](https://travis-ci.org/BNIA/tidyall)
 
-A tool for parsing and standardizing unstructured date columns into ISO 8601 formats.
+A tool for parsing and standardizing unstructured columns. TidyAll combines TidyDate, which standardizes inconsistent date columns into ISO 8601 formats, and TidyBlockNLotm which structures special strings related to block and lots.
 
 
 ## Interface
 
-TidyDate is a standalone Flask app with a web application interface. The minimalistic templates allow the user to drag and drop (or manually) upload the Excel or CSV dataset, choose the date column to be parsed, and download the new dataset as a CSV file.
+TidyAll is a standalone Flask app with a web application interface. The minimalistic templates allow the user to drag and drop (or manually) upload the Excel or CSV dataset, choose the columns to be parsed, and download the new dataset as a CSV file.
 
 Usage of the interface is detailed [here](https://github.com/BNIA/tidydate/docs/usage.md).
 
