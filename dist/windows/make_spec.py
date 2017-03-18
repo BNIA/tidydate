@@ -21,7 +21,9 @@ SPEC_STR = """\
         binaries=None,
         datas=[
             ("{ROOT}tidyall/{TEMPLATE_PATH}",
-                "{TEMPLATE_PATH}")
+                "{TEMPLATE_PATH}"),
+            ("{ROOT}tidyall/{STATIC_PATH}",
+                "{STATIC_PATH}")
         ],
         hiddenimports=[],
         hookspath=[],
@@ -61,6 +63,7 @@ spec_output = dedent(
         MOD_PATH=path.join("tidyall", "main.py"),
         PROJ_PATH=PROJ_DIR,
         TEMPLATE_PATH=path.join("app", "templates"),
+        STATIC_PATH=path.join("app", "static"),
         ICO_PATH=path.join("tidyall", "app", "static", "img", "logo.ico")
     )
 )
