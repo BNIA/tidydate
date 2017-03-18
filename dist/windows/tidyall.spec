@@ -6,7 +6,9 @@ a = Analysis(
     binaries=None,
     datas=[
         ("..\\..\\tidyall\\app\\templates",
-            "app\\templates")
+            "app\\templates"),
+        ("..\\..\\tidyall\\app\\static",
+            "app\\static")
     ],
     hiddenimports=[],
     hookspath=[],
@@ -34,5 +36,5 @@ exe = EXE(
     strip=False,
     upx=True,
     console=True,
-    # icon="..\\..\\tidyall\\app\\static\\img\\logo.ico"
+    icon="..\\..\\tidyall\\app\\static\\img\\logo.ico"
 )
