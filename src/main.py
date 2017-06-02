@@ -6,17 +6,18 @@
 This file serves as the driver for the program by initializing the Sanic app
 """
 
+from __future__ import absolute_import, print_function, unicode_literals
 from os import path, makedirs
 import webbrowser
 
 from app import views
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
     port_file_name = "port.txt"
 
     if not path.exists(port_file_name):
-        with open(port_file_name, 'w') as port_file:
+        with open(port_file_name, "w") as port_file:
             port = ""
             while len(port) != 4:
                 port = str(input("Insert port: "))

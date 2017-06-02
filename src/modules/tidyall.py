@@ -14,7 +14,8 @@ import pandas as pd
 import numpy as np
 
 from .settings import VALID_COLS
-from .tidytools import TidyDate, TidyBlockNLot
+from .tidybnl import TidyBlockNLot
+from .tidydate import TidyDate
 
 
 class TidyAll(object):
