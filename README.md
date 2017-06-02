@@ -1,11 +1,11 @@
 <div align="center">
-  <img src="https://raw.githubusercontent.com/BNIA/tidyall/master/src/frontend/static/img/logo.png" width="50%">
+  <img src="https://raw.githubusercontent.com/BNIA/tidyall/master/src/frontend/static/img/logo.png" width="45%">
 </div>
 
 
 [![Build Status](https://travis-ci.org/BNIA/tidyall.svg?branch=master)](https://travis-ci.org/BNIA/tidyall)
 
-A tool for parsing and standardizing unstructured columns. TidyAll combines TidyDate, which standardizes inconsistent date columns into ISO 8601 formats, and TidyBlockNLotm which structures special strings related to block and lots.
+A tool for parsing and standardizing unstructured columns. TidyAll combines TidyDate, which standardizes inconsistent date columns into ISO 8601 formats, and TidyBlockNLot, which structures special strings related to block and lots.
 
 
 ## Interface

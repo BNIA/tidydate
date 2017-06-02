@@ -6,8 +6,6 @@
 Tests for server-side modules
 """
 
-from __future__ import absolute_import, print_function, unicode_literals
-
 from . import FILE_CSV, FILE_XLSX
 from ..src.modules import tidyall
 

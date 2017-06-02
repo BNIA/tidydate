@@ -1,17 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""tidytools
+"""tidybnl
 
-This file declares and implements the TidyDate and TidyBlockNLot classes for
-TidyAll.
-
-TidyDate converts and formats valid date columns into ISO 8601 (yyyy-mm-dd).
+This file declares and implements the TidyBlockNLot classes for TidyAll.
 TidyBlockNLot converts integer block and lot columns into string, pads them
 with zeros and creates the tidy_blocknlot column.
 """
-
-from __future__ import print_function, unicode_literals
 
 
 class TidyBlockNLot(object):

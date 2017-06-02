@@ -7,7 +7,6 @@ This file contains the endpoints for rendering the interface and implementing
 the backend modules
 """
 
-from __future__ import absolute_import, print_function, unicode_literals
 from os import path
 
 from flask import jsonify, render_template, request

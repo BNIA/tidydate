@@ -3,7 +3,7 @@
 
 """main
 
-This file serves as the driver for the program by initializing the Sanic app
+This file serves as the driver for the program by initializing the Flask app
 """
 
 from __future__ import absolute_import, print_function, unicode_literals
