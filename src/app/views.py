@@ -14,12 +14,11 @@ from flask import jsonify, render_template, request
 from werkzeug import secure_filename
 
 from .config import allowed_file, app, UPLOAD_FOLDER
-from .context import modules  # pylint: disable=unused-import
-from modules.settings import VALID_COLS
 from modules import tidyall
+from modules.settings import VALID_COLS
 
 
-@app.route('/')
+@app.route("/")
 def index():
     """Renders the index
 
@@ -83,7 +82,7 @@ def parse_date(file_name):
             if key in VALID_COLS
         }
         options = [
-            key.replace("_opt", '') for key in response.keys()
+            key.replace("_opt", "") for key in response.keys()
             if key not in VALID_COLS
         ]
 
@@ -97,7 +96,7 @@ def parse_date(file_name):
     if app.df:
         return render_template(
             "params.html",
-            cols=sorted(app.df.get_cols() | {''})
+            cols=sorted(app.df.get_cols() | {""})
         )
 
     return render_template("params.html")
