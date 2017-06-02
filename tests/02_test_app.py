@@ -7,8 +7,13 @@ Tests for server-side modules
 """
 
 from __future__ import absolute_import, print_function, unicode_literals
-from StringIO import StringIO
 from ast import literal_eval
+from sys import version_info
+if version_info < (3, 0):
+    from StringIO import StringIO as fileIO
+
+else:
+    from io import BytesIO as fileIO
 
 from ..src.frontend.views import app
 from . import FILE_CSV
@@ -32,18 +37,23 @@ def test_upload():
 
     csv_data = ""
 
-    with open(FILE_CSV) as csv_file:
+    with open(FILE_CSV, "rb") as csv_file:
         csv_data = csv_file.read()
+
+    def format_response(response):
+
+        return response.decode("utf-8") if version_info >= (3, 0) else response
 
     response = app_client.post(
         "/upload", buffered=True,
         content_type="multipart/form-data",
-        data={"file": (StringIO(csv_data), "test_csv.csv")}
+        data={"file": (fileIO(csv_data), "test_csv.csv")}
     )
 
     literal_response = literal_eval(
-        response.data.replace("\n", "")
-        .replace("false", "False").replace("true", "True")
+        format_response(
+            response.data
+        ).replace("\n", "").replace("false", "False").replace("true", "True")
     )
 
     assert(literal_response["received"])
