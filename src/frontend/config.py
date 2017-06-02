@@ -6,8 +6,6 @@
 This file instantiates the Flask app and other configurations
 """
 
-from __future__ import absolute_import, print_function, unicode_literals
-
 from os import path
 
 from . import app

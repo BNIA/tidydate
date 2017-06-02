@@ -5,7 +5,6 @@
 
 """
 
-from __future__ import absolute_import, print_function, unicode_literals
 from os import remove
 import sys
 from textwrap import dedent
@@ -147,7 +146,7 @@ class TidyAll(object):
             `True` if file was created successfully
         """
 
-        new_file = self.file_name + "_tidydate.csv"
+        new_file = self.file_name + "_tidy.csv"
 
         self.df.to_csv(new_file, encoding="utf-8", index=False)
 
