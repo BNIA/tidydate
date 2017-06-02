@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://raw.githubusercontent.com/BNIA/tidyall/master/tidyall/frontend/static/img/logo.png" width="50%">
+  <img src="https://raw.githubusercontent.com/BNIA/tidyall/master/src/frontend/static/img/logo.png" width="50%">
 </div>
 
 
