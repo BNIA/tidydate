@@ -10,7 +10,7 @@ from __future__ import absolute_import, print_function, unicode_literals
 from os import path, makedirs
 import webbrowser
 
-from app import views
+from frontend import views
 
 if __name__ == "__main__":
 
