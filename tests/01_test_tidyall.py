@@ -7,13 +7,9 @@ Tests for server-side modules
 """
 
 from __future__ import absolute_import, print_function, unicode_literals
-from os import path
 
+from . import FILE_CSV, FILE_XLSX
 from ..src.modules import tidyall
-
-SAMPLE_DIR = "samples"
-FILE_CSV = path.join(SAMPLE_DIR, "test_csv.csv")
-FILE_XLSX = path.join(SAMPLE_DIR, "test_xlsx.xlsx")
 
 ALL_OPTS = [
     "date",

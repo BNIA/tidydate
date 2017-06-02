@@ -7,26 +7,17 @@ This file instantiates the Flask app and other configurations
 """
 
 from __future__ import absolute_import, print_function, unicode_literals
-import string
-from random import SystemRandom, uniform
 
-from flask import Flask
+from os import path
 
-from .context import modules  # pylint: disable=unused-import
-from .extra_mods import *
+from . import app
+from .extra_mods import *  # pylint: disable=unused-import
 from modules._version import __version__
 
-UPLOAD_FOLDER = "uploads"
-ALLOWED_EXTENSIONS = {"csv", "xlsx"}
-
-app = Flask(__name__)
-
-app.secret_key = "".join(
-    SystemRandom().choice(
-        string.ascii_letters + string.digits
-    ) for _ in range(int(uniform(10, 20)))
+UPLOAD_FOLDER = path.join(
+    path.dirname(path.dirname(path.abspath(__file__))), "uploads"
 )
-app.df = None
+ALLOWED_EXTENSIONS = {"csv", "xlsx"}
 
 
 def allowed_file(file_name):

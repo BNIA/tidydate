@@ -45,20 +45,19 @@ def upload():
     if request.method == "POST":
 
         file = request.files["file"]
+        app.file_name = secure_filename(file.filename)
 
         if file and allowed_file(file.filename):
 
             app.file_name = secure_filename(file.filename)
-            file.save(path.join(UPLOAD_FOLDER, app.file_name))
+            file_path = path.join(UPLOAD_FOLDER, app.file_name)
+            file.save(file_path)
 
-            app.df = tidyall.TidyAll(
-                path.join(UPLOAD_FOLDER, app.file_name),
-                debug=True
-            )
+            app.df = tidyall.TidyAll(file_path, debug=True)
 
-            response = {"received": True, "file_name": app.file_name}
+            return jsonify({"received": True, "file_name": app.file_name})
 
-            return jsonify(response)
+        return jsonify({"received": False, "file_name": app.file_name})
 
 
 @app.route("/<file_name>", methods=["GET", "POST"])
