@@ -22,3 +22,10 @@ class TidyAddr(object):
     def parse(self):
 
         print(self.df[self.addr_col])
+
+
+if __name__ == '__main__':
+
+    df = pd.read_csv("tests/samples/test_addr_csv.csv")
+    obj = TidyAddr(df, "PLN Address")
+    obj.parse()

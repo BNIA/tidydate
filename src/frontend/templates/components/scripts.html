@@ -32,6 +32,10 @@
         search_contains: true
     });
 
+    $("#addr_opt").on("change" ,function(){
+        $(".chosen").attr("disabled", !this.checked).trigger("chosen:updated");
+    });
+
     $("#date_opt").on("change" ,function(){
         $(".chosen").attr("disabled", !this.checked).trigger("chosen:updated");
     });

@@ -12,7 +12,9 @@
 
                 <div class="row">
                     <p>
-                        <input type="checkbox" id="date_opt" name="date_opt" checked="on" />
+                        <input type="checkbox" id="addr_opt" name="addr_opt" checked="on"/>
+                        <label for="addr_opt">Address</label>
+                        <input type="checkbox" id="date_opt" name="date_opt" />
                         <label for="date_opt">Date</label>
                         <input type="checkbox" id="blocknlot_opt" name="blocknlot_opt"/>
                         <label for="blocknlot_opt">BlockNLot</label>
@@ -20,7 +22,14 @@
                 </div>
 
                 <div class="row">
-                    <select data-placeholder="Date column" id="date_column" name="date" class="chosen">
+
+                    <select data-placeholder="Address column" id="addr_column" name="addr" class="chosen">
+                        {% for column in cols %}
+                            <option value="{{ column }}">{{ column }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <select data-placeholder="Date column" id="date_column" name="date" class="chosen" disabled="true">
                         {% for column in cols %}
                             <option value="{{ column }}">{{ column }}</option>
                         {% endfor %}
@@ -37,6 +46,7 @@
                             <option value="{{ column }}">{{ column }}</option>
                         {% endfor %}
                     </select>
+
                 </div>
 
                 <p style="margin-top: 10%;">
