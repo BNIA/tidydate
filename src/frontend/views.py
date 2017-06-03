@@ -84,6 +84,7 @@ def parse_date(file_name):
             if key not in VALID_COLS
         ]
 
+        print(options, columns)
         app.df.set_col(columns)
         app.df.set_opt(options)
 
