@@ -20,7 +20,7 @@
 
 <script type="text/javascript">
 
-    $(".chosen").chosen({
+    $(".chosen_addr").chosen({
         no_results_text: "Nothing found!",
         allow_single_deselect: true,
         search_contains: true
@@ -32,12 +32,18 @@
         search_contains: true
     });
 
+    $(".chosen_date").chosen({
+        no_results_text: "Nothing found!",
+        allow_single_deselect: true,
+        search_contains: true
+    });
+
     $("#addr_opt").on("change" ,function(){
-        $(".chosen").attr("disabled", !this.checked).trigger("chosen:updated");
+        $(".chosen_addr").attr("disabled", !this.checked).trigger("chosen:updated");
     });
 
     $("#date_opt").on("change" ,function(){
-        $(".chosen").attr("disabled", !this.checked).trigger("chosen:updated");
+        $(".chosen_date").attr("disabled", !this.checked).trigger("chosen:updated");
     });
 
     $("#blocknlot_opt").on("change" ,function(){

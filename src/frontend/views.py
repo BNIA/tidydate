@@ -60,7 +60,7 @@ def upload():
 
 
 @app.route("/<file_name>", methods=["GET", "POST"])
-def parse_date(file_name):
+def parse(file_name):
     """Parses the uploaded file
 
     Args:

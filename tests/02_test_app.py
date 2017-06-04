@@ -56,3 +56,12 @@ def test_upload():
     )
 
     assert(literal_response["received"])
+
+
+def test_parse_status_code():
+    """Sends HTTP GET request to the parse path"""
+
+    result = app_client.get("/test_csv.csv")
+
+    # assert the status code of the response
+    assert(result.status_code == 200)
