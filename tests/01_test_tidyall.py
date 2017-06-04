@@ -7,7 +7,7 @@ Tests for server-side modules
 """
 
 from . import FILE_CSV, FILE_XLSX
-from ..src.modules import tidyall
+from modules import tidyall
 
 ALL_OPTS = [
     "date",

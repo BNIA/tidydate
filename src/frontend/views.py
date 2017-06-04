@@ -12,7 +12,7 @@ from os import path
 from flask import jsonify, render_template, request
 from werkzeug import secure_filename
 
-from .config import allowed_file, app, UPLOAD_FOLDER
+from config import allowed_file, app, UPLOAD_FOLDER
 from modules import tidyall
 from modules.settings import VALID_COLS
 
