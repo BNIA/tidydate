@@ -12,9 +12,9 @@ from textwrap import dedent
 import pandas as pd
 import numpy as np
 
-from settings import VALID_COLS
-from tidybnl import TidyBlockNLot
-from tidydate import TidyDate
+from .settings import VALID_COLS
+from .tidybnl import TidyBlockNLot
+from .tidydate import TidyDate
 
 
 class TidyAll(object):

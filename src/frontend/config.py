@@ -9,7 +9,7 @@ This file instantiates the Flask app and other configurations
 from os import path
 
 from . import app
-from extra_mods import *  # pylint: disable=unused-import
+from . import extra_mods  # pylint: disable=unused-import
 from _version import __version__
 
 UPLOAD_FOLDER = path.join(

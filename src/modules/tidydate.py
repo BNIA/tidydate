@@ -13,7 +13,7 @@ from dateutil import parser as date_parser
 import numpy as np
 import pandas as pd
 
-from settings import TIDY_DATE_SPLIT
+from .settings import TIDY_DATE_SPLIT
 
 
 class TidyDate(object):
