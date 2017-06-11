@@ -15,6 +15,8 @@ from frontend import views
 
 if __name__ == "__main__":
 
+    # from frontend import views
+
     parser = argparse.ArgumentParser(
         description="The main script for TidyAll"
     )

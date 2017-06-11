@@ -20,10 +20,8 @@ SPEC_STR = """\
         pathex=["{PROJ_PATH}"],
         binaries=None,
         datas=[
-            ("{ROOT}tidyall/{TEMPLATE_PATH}",
-                "{TEMPLATE_PATH}"),
-            ("{ROOT}tidyall/{STATIC_PATH}",
-                "{STATIC_PATH}")
+            ("{ROOT}src/{TEMPLATE_PATH}",
+                "{TEMPLATE_PATH}")
         ],
         hiddenimports=[],
         hookspath=[],
@@ -60,11 +58,10 @@ PROJ_DIR = path.dirname(path.dirname(path.dirname(path.abspath(__file__))))
 spec_output = dedent(
     SPEC_STR.format(
         ROOT="../../",
-        MOD_PATH=path.join("tidyall", "main.py"),
+        MOD_PATH=path.join("src", "main.py"),
         PROJ_PATH=PROJ_DIR,
-        TEMPLATE_PATH=path.join("app", "templates"),
-        STATIC_PATH=path.join("app", "static"),
-        ICO_PATH=path.join("tidyall", "app", "static", "img", "logo.ico")
+        TEMPLATE_PATH=path.join("frontend", "templates"),
+        ICO_PATH=path.join("src", "frontend", "static", "img", "logo.ico")
     )
 )
 

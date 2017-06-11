@@ -1,14 +1,12 @@
 # -*- mode: python -*-
 
 a = Analysis(
-    ["..\\..\\tidyall\\main.py"],
-    pathex=["C:\\Users\\sabbi\\Documents\\GitHub\\tidydate"],
+    ["../../src/main.py"],
+    pathex=["/home/sabbir/Desktop/BNIA/tidyall"],
     binaries=None,
     datas=[
-        ("..\\..\\tidyall\\app\\templates",
-            "app\\templates"),
-        ("..\\..\\tidyall\\app\\static",
-            "app\\static")
+        ("../../src/frontend/templates",
+            "frontend/templates")
     ],
     hiddenimports=[],
     hookspath=[],
@@ -32,9 +30,9 @@ exe = EXE(
     a.zipfiles,
     a.datas,
     name="tidyall",
-    debug=False,
+    debug=True,
     strip=False,
     upx=True,
     console=True,
-    icon="..\\..\\tidyall\\app\\static\\img\\logo.ico"
+    icon="../../src/frontend/static/img/logo.ico"
 )
