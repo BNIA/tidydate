@@ -3,19 +3,19 @@
 
 """test_tidydate
 
-Tests for server-side modules
+Tests for client-side modules
 """
 
 from ast import literal_eval
 from sys import version_info
 if version_info < (3, 0):
-    from StringIO import StringIO as fileIO
+    from StringIO import StringIO as file_io
 
 else:
-    from io import BytesIO as fileIO
+    from io import BytesIO as file_io
 
-from ..src.frontend.views import app
 from . import FILE_CSV
+from frontend.views import app
 
 app.debug = True
 app_client = app.test_client()
@@ -46,7 +46,7 @@ def test_upload():
     response = app_client.post(
         "/upload", buffered=True,
         content_type="multipart/form-data",
-        data={"file": (fileIO(csv_data), "test_csv.csv")}
+        data={"file": (file_io(csv_data), "test_csv.csv")}
     )
 
     literal_response = literal_eval(
@@ -56,3 +56,12 @@ def test_upload():
     )
 
     assert(literal_response["received"])
+
+
+def test_parse_status_code():
+    """Sends HTTP GET request to the parse path"""
+
+    result = app_client.get("/test_csv.csv")
+
+    # assert the status code of the response
+    assert(result.status_code == 200)

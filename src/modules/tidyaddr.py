@@ -19,9 +19,27 @@ class TidyAddr(object):
         self.df = df
         self.addr_col = column
 
-    def parse(self):
+    @staticmethod
+    def parse_addr(addr_str):
+        """IMPLEMENT TIDYADDR HERE"""
 
-        print(self.df[self.addr_col])
+        return ""
+
+    def __clean_col(self):
+        """Parses and standardizes the selected column values
+
+        Args:
+            None
+
+        Returns:
+            None
+        """
+
+        if self.addr_col:
+
+            self.df["tidy_addr"] = self.df[self.addr_col].apply(
+                lambda x: self.parse_addr(str(x))
+            )
 
 
 if __name__ == '__main__':

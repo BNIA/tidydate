@@ -23,13 +23,13 @@
 
                 <div class="row">
 
-                    <select data-placeholder="Address column" id="addr_column" name="addr" class="chosen">
+                    <select data-placeholder="Address column" id="addr_column" name="addr" class="chosen_addr">
                         {% for column in cols %}
                             <option value="{{ column }}">{{ column }}</option>
                         {% endfor %}
                     </select>
 
-                    <select data-placeholder="Date column" id="date_column" name="date" class="chosen" disabled="true">
+                    <select data-placeholder="Date column" id="date_column" name="date" class="chosen_date" disabled="true">
                         {% for column in cols %}
                             <option value="{{ column }}">{{ column }}</option>
                         {% endfor %}
