@@ -8,7 +8,7 @@ This file instantiates the Flask app and other configurations
 
 from os import path
 
-from app import app
+from .app import app
 from . import extra_mods  # pylint: disable=unused-import
 from _version import __version__
 

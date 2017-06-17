@@ -7,6 +7,7 @@ Tests for client-side modules
 """
 
 from ast import literal_eval
+from os import path, makedirs
 from sys import version_info
 if version_info < (3, 0):
     from StringIO import StringIO as file_io
@@ -15,7 +16,7 @@ else:
     from io import BytesIO as file_io
 
 from . import FILE_CSV
-from frontend.views import app
+from frontend.views import app, UPLOAD_FOLDER
 
 app.debug = True
 app_client = app.test_client()
@@ -35,6 +36,9 @@ def test_upload():
     """POST requests with file uploads"""
 
     csv_data = ""
+
+    if not path.exists(UPLOAD_FOLDER):
+        makedirs(UPLOAD_FOLDER)
 
     with open(FILE_CSV, "rb") as csv_file:
         csv_data = csv_file.read()

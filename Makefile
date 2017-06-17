@@ -11,7 +11,7 @@ clean:
 	# clean out cache and temporary files
 	@find . \( -name "*.pyc" -o -name "port.txt" -o \
 		-name "*_tidy.csv" \) -type f -delete
-	@find . -name "__pycache__" -type d -delete
+	@find . \( -name "__pycache__" -o -name "uploads" \) -type d -empty -delete
 
 
 .PHONY: install
