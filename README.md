@@ -12,8 +12,6 @@ A tool for parsing and standardizing unstructured columns. TidyAll combines Tidy
 
 TidyAll is a standalone Flask app with a web application interface. The minimalistic templates allow the user to drag and drop (or manually) upload the Excel or CSV dataset, choose the columns to be parsed, and download the new dataset as a CSV file.
 
-Usage of the interface is detailed [here](https://github.com/BNIA/tidydate/docs/usage.md).
-
 
 ## Modules
 
